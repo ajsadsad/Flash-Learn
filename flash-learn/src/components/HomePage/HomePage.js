@@ -7,15 +7,19 @@ function HomePage() {
 
         <NavLink to= "/English">
             <Button colorScheme='teal' size='lg'>
-                English
+                K - 2
             </Button>
         </NavLink>
-        <Button colorScheme='teal' size='lg'>
-            Math
-        </Button>
-        <Button colorScheme='teal' size='lg'>
-            Science
-        </Button>
+        <NavLink to= "/Math">
+            <Button colorScheme='teal' size='lg'>
+                3 - 4
+            </Button>
+        </NavLink>
+        <NavLink to= "/Science">
+            <Button colorScheme='teal' size='lg'>
+                5 - 6
+            </Button>
+        </NavLink>
     </div>
     );
 }

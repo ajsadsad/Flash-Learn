@@ -2,26 +2,32 @@ import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {ChakraProvider} from '@chakra-ui/react';
 import HomePage from './components/HomePage/HomePage';
-import TopicMenu from './components/TopicMenu/TopicMenu'
+import EnglishPage from './components/EnglishPage/EnglishPage'
+import MathPage from './components/MathPage/MathPage';
+import SciencePage from './components/SciencePage/SciencePage';
 
 function App() {
   return (
-    <ChakraProvider>
-      <BrowserRouter>
-        <div className="App">
-          <header className="App-header">
+    <div className="App-header">
+      <ChakraProvider>
+        <BrowserRouter>
             <Routes>
               <Route path={''} element={
                 <HomePage/>
               }/>
               <Route path={"/english"} element={
-                <TopicMenu/>
+                <EnglishPage/>
+              }/>
+              <Route path={"/math"} element={
+                <MathPage/>
+              }/>
+              <Route path={"/science"} element={
+                <SciencePage/>
               }/>
             </Routes>
-          </header>
-        </div>
-      </BrowserRouter>
-    </ChakraProvider>
+        </BrowserRouter>
+      </ChakraProvider>
+    </div>
   );
 }
 
