@@ -3,8 +3,11 @@ import { NavLink } from 'react-router-dom'
 
 function HomePage() {
     return(
-    <div>
-
+    <div style={
+        {"display": "flex",
+        "flex-direction": "column",
+        "align-items": "center",
+        "justify-content": "center"}}>
         <NavLink to= "/English">
             <Button colorScheme='teal' size='lg'>
                 K - 2
