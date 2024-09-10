@@ -1,0 +1,14 @@
+style {
+  position: fixed;
+  bottom: 100;
+  display: inline;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+levels {
+  float: left;
+  color-scheme: "teal";
+  size: "lg";
+}
