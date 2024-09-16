@@ -5,6 +5,10 @@ import HomePage from './components/HomePage/HomePage';
 import EnglishPage from './components/EnglishPage/EnglishPage'
 import MathPage from './components/MathPage/MathPage';
 import SciencePage from './components/SciencePage/SciencePage';
+import EnglishDetailPage from './components/EnglishPage/EnglishDetailPage';
+import GrammarPage from './components/EnglishPage/GrammarPage';
+import SpellingPage from './components/EnglishPage/SpellingPage';
+import PunctuationPage from './components/EnglishPage/PunctuationPage';
 
 function App() {
   return (
@@ -18,6 +22,18 @@ function App() {
               <Route path={"/english"} element={
                 <EnglishPage/>
               }/>
+              <Route path={"/english/details"} element={
+                <EnglishDetailPage/>
+              }/>
+              <Route path="/english/grammar" element={
+                <GrammarPage />
+              } />
+              <Route path="/english/spelling" element={
+                <SpellingPage />
+              } />
+              <Route path="/english/punctuation" element={
+                <PunctuationPage />
+              } />
               <Route path={"/math"} element={
                 <MathPage/>
               }/>
