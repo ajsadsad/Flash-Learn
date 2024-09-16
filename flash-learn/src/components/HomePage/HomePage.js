@@ -1,46 +1,23 @@
 import { Button } from "@chakra-ui/react"
-import { NavLink } from 'react-router-dom'
+import React from 'react'
+import '/Users/hfgilani/Desktop/SPR2024/SIS/Flash-Learn/flash-learn/src/components/HomePage/HomePage.css'
+import '/Users/hfgilani/Desktop/SPR2024/SIS/Flash-Learn/flash-learn/src/App.css'
 
 function HomePage() {
     return(
-    <div style={
-        {"display": "flex",
-        "flex-direction": "column",
-        "align-items": "center",
-        "justify-content": "center"}}>
-        <div>
-            <NavLink to= "/English">
-                <Button colorScheme='teal' size='lg'>
+    <div className="container">
+        <div className="button-container">
+            <Button className="english">
                     English
-                </Button>
-            </NavLink>
-            <NavLink to= "/Math">
-                <Button colorScheme='teal' size='lg'>
+            </Button>
+            <Button className="maths">
                     Maths
-                </Button>
-            </NavLink>
-            <NavLink to= "/Science">
-                <Button colorScheme='teal' size='lg'>
-                    Science
-                </Button>
-            </NavLink>
+            </Button>
         </div>
-        <div>
-        <NavLink to= "/easy">
-                <Button colorScheme='teal' size='lg'>
-                    K - 2
-                </Button>
-            </NavLink>
-            <NavLink to= "/moderate">
-                <Button colorScheme='teal' size='lg'>
-                    3 - 4
-                </Button>
-            </NavLink>
-            <NavLink to= "/hard">
-                <Button colorScheme='teal' size='lg'>
-                    5 - 6
-                </Button>
-            </NavLink>
+        <div className="button-container-row">
+            <Button className="science">
+                    Science
+            </Button>
         </div>
     </div>
     );
