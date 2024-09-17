@@ -9,6 +9,7 @@ import EnglishDetailPage from './components/EnglishPage/EnglishDetailPage';
 import GrammarPage from './components/EnglishPage/GrammarPage';
 import SpellingPage from './components/EnglishPage/SpellingPage';
 import PunctuationPage from './components/EnglishPage/PunctuationPage';
+import SubjectPage from './components/SubjectPage/SubjectPage';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
             <Routes>
               <Route path={''} element={
                 <HomePage/>
+              }/>
+              <Route path={'/subject'} element={
+                <SubjectPage/>
               }/>
               <Route path={"/english"} element={
                 <EnglishPage/>
