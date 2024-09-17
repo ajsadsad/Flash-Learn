@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 function SpellingPage() {
     const [selectedOption, setSelectedOption] = useState('');
@@ -92,18 +93,18 @@ function SpellingPage() {
                 </Box>
             </GridItem>
 
-            {/* Bottom Navigation */}
+             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
                 <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
                     {/* English Button with Green Border */}
                     <Box borderTop="4px solid green" pt="2" display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white">
+                        <Button as={Link} to="/english/details" w="95%" bg="white">
                             English
                         </Button>
                     </Box>
                     {/* Math Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white">
+                        <Button as={Link} to="/math/details" w="95%" bg="white">
                             Math
                         </Button>
                     </Box>

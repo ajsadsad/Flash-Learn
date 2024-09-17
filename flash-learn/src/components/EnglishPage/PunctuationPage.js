@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 function PunctuationPage() {
     const [selectedOption, setSelectedOption] = useState('');
@@ -96,13 +97,13 @@ function PunctuationPage() {
                 <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
                     {/* English Button with Green Border */}
                     <Box borderTop="4px solid green" pt="2" display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white">
+                        <Button as={Link} to="/english/details" w="95%" bg="white">
                             English
                         </Button>
                     </Box>
                     {/* Math Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white">
+                        <Button as={Link} to="/math/details" w="95%" bg="white">
                             Math
                         </Button>
                     </Box>
