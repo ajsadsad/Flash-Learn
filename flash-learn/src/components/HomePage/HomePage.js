@@ -1,30 +1,38 @@
-import { Button } from "@chakra-ui/react"
-import React from 'react'
-import '/Users/hfgilani/Desktop/SPR2024/SIS/Flash-Learn/flash-learn/src/components/HomePage/HomePage.css'
-import '/Users/hfgilani/Desktop/SPR2024/SIS/Flash-Learn/flash-learn/src/App.css'
+import { Button, Text } from "@chakra-ui/react"
+import { NavLink } from 'react-router-dom'
 
 function HomePage() {
-    return(
-    <div className="container">
-        <div className="button-container">
-            <Button className="english">
-                    English
-            </Button>
-            <Button className="maths">
-                    Maths
-            </Button>
+    return (
+        <div style={{
+            display: "flex",
+            flexDirection: "column",  
+            alignItems: "center",    
+            justifyContent: "center", 
+            height: "100vh",          
+            gap: "60px"               
+        }}>
+            {/* Title */}
+            <Text fontSize="3xl" mb="20px" fontWeight="bold"> 
+                Select your year group
+            </Text>
+
+            <NavLink to="/English">
+                <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px" >
+                    K - 2
+                </Button>
+            </NavLink>
+            <NavLink to="/Math">
+                <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px" >
+                    3 - 4
+                </Button>
+            </NavLink>
+            <NavLink to="/Science">
+                <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px" >
+                    5 - 6
+                </Button>
+            </NavLink>
         </div>
-        <div className="button-container-row">
-            <Button className="science">
-                    Science
-            </Button>
-        </div>
-    </div>
     );
 }
 
 export default HomePage;
-
-//TODO: 
-// format the levels to display at the bottom and be highlighted when selected
-// Format the subjects so it is in the center on the page
