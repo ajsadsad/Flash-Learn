@@ -85,7 +85,7 @@ function MathDetailPage() {
                     </Box>
                     {/* Science Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white">
+                        <Button as={Link} to="/science/details" w="95%" bg="white">
                             Science
                         </Button>
                     </Box>
