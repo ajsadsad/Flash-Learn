@@ -3,6 +3,9 @@ import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 
 function SpellingPage() {
     const [selectedOption, setSelectedOption] = useState('');
+    const [flipped, setFlipped] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(null);
+
 
     // Example question and options
     const question = "Select the correct spelling";
@@ -11,6 +14,14 @@ function SpellingPage() {
         "Fourty",
         "Fourety"
     ];
+
+    const correctAnswer = "Forty";
+
+    const handleSubmit = () => {
+        const answerIsCorrect = selectedOption === correctAnswer;
+        setIsCorrect(answerIsCorrect);
+        setFlipped(true); 
+    };
 
     return (
         <Grid
@@ -33,39 +44,51 @@ function SpellingPage() {
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
                 <Box
-                    bg="white"
+                    bg= {flipped ? (isCorrect ? "green.300" : "red.300" ): "white"}
                     p="20px"
                     borderRadius="md"
                     boxShadow="lg"
                     width="60%"
                     textAlign="center"
+                    transform = {flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
+                    transition = "transform 0.6s"
                 >
-                    {/* Question */}
-                    <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">{question}</Text>
+                    
+            {!flipped ? (
+                <>{/* Question */}
+                            <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
+                                {question}
+                            </Text>
 
-                    {/* Options */}
-                    <VStack spacing="4" align="stretch">
-                        {options.map((option, index) => (
-                            <Box
-                                key={index}
-                                p="4"
-                                border="2px solid"
-                                borderColor={selectedOption === option ? "black.500" : "gray.200"}
-                                borderRadius="md"
-                                cursor="pointer"
-                                _hover={{ borderColor: "blue.200" }}
-                                onClick={() => setSelectedOption(option)}
-                                textAlign="left"
-                            >
-                                <Text color="black">{option}</Text>
-                            </Box>
-                        ))}
-                    </VStack>
+                            {/* Options */}
+                            <VStack spacing="4" align="stretch">
+                                {options.map((option, index) => (
+                                    <Box
+                                        key={index}
+                                        p="4"
+                                        border="2px solid"
+                                        borderColor={selectedOption === option ? "black.500" : "gray.200"}
+                                        borderRadius="md"
+                                        cursor="pointer"
+                                        _hover={{ borderColor: "blue.200" }}
+                                        onClick={() => setSelectedOption(option)}
+                                        textAlign="left"
+                                    >
+                                        <Text color="black">{option}</Text>
+                                    </Box>
+                                ))}
+                            </VStack>
 
-                    {/* Submit Button */}
-                    <Button mt="6" color ="blackAlpha.700" onClick={() => alert(`You selected: ${selectedOption}`)}>
-                        Submit Answer
-                    </Button>
+                            {/* Submit Button */}
+                            <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
+                                Submit Answer
+                            </Button>
+                        </>
+                    ) : (
+                        <Text fontSize="2xl" color="black"style={{ transform: "rotateY(180deg)" }}>
+                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+                        </Text>
+                    )}
                 </Box>
             </GridItem>
 
