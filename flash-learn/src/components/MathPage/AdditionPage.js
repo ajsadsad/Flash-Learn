@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-function GrammarPage() {
+function AdditionPage() {
     const [selectedOption, setSelectedOption] = useState('');
     const [flipped, setFlipped] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
 
     // Example question and options
-    const question = "Select the correct use of a comma";
+    const question = "What does 1 + 4 =";
     const options = [
-        "The dog, barked loudly at the cat.",
-        "The dog barked, loudly at the cat.",
-        "The dog barked loudly, at the cat."
+        "5",
+        "7",
+        "3"
     ];
-    const correctAnswer = "The dog barked loudly, at the cat.";
+    const correctAnswer = "5";
 
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
@@ -37,7 +37,7 @@ function GrammarPage() {
         >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
-                <Text fontSize="4xl" fontWeight="bold" color="white">Grammar</Text> 
+                <Text fontSize="4xl" fontWeight="bold" color="white">Addition</Text> 
             </GridItem>
 
             {/* Flashcard Section */}
@@ -94,14 +94,14 @@ function GrammarPage() {
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
                 <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
-                    {/* English Button with Green Border */}
-                    <Box borderTop="4px solid green" pt="2" display="flex" alignItems="center" justifyContent="center">
+                    {/* English Button */}
+                    <Box display="flex" alignItems="center" justifyContent="center">
                         <Button as={Link} to="/english/details" w="95%" bg="white">
                             English
                         </Button>
                     </Box>
-                    {/* Math Button */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
+                    {/* Math Button  with Green Border */}
+                    <Box borderTop="4px solid green" pt="2" display="flex" alignItems="center" justifyContent="center">
                         <Button as={Link} to="/math/details" w="95%" bg="white">
                             Math
                         </Button>
@@ -118,4 +118,4 @@ function GrammarPage() {
     );
 }
 
-export default GrammarPage;
+export default AdditionPage;
