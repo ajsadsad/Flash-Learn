@@ -26,8 +26,6 @@ function SubjectPage() {
                             Maths
                     </Button>
                 </NavLink>
-            </div>
-            <div>
                 <NavLink to="/Science">
                     <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px">
                             Science
