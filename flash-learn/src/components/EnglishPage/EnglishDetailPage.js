@@ -20,8 +20,7 @@ function EnglishDetailPage() {
             bg="#DCDCDC"
             color="blackAlpha.800"
             fontFamily="'Baloo Bhai 2', sans-serif"
-            fontWeight="bold"
-        >
+            fontWeight="bold" >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
                 <Text 

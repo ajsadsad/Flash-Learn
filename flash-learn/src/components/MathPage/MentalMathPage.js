@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
-import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
+import { Grid, GridItem, Box, Text, Button, Input } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-function GrammarPage() {
-    const [selectedOption, setSelectedOption] = useState('');
+function MentalMathPage() {
+    const [userAnswer, setUserAnswer] = useState('');
     const [flipped, setFlipped] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
 
-    // Example question and options
-    const question = "Select the correct use of a comma";
-    const options = [
-        "The dog, barked loudly at the cat.",
-        "The dog barked, loudly at the cat.",
-        "The dog barked loudly, at the cat."
-    ];
-    const correctAnswer = "The dog barked loudly, at the cat.";
+    // Example question and correct answer
+    const question = "What is 7 + 5 - 4?";
+    const correctAnswer = "8";
 
     const handleSubmit = () => {
-        const answerIsCorrect = selectedOption === correctAnswer;
+        const answerIsCorrect = userAnswer.trim() === correctAnswer;
         setIsCorrect(answerIsCorrect);
-        setFlipped(true); 
+        setFlipped(true);
     };
 
     return (
@@ -37,54 +32,44 @@ function GrammarPage() {
         >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
-                <Text fontSize="4xl" fontWeight="bold" color="white">Grammar</Text> 
+                <Text fontSize="4xl" fontWeight="bold" color="white">Mental Math</Text>
             </GridItem>
 
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
                 <Box
-                    bg= {flipped ? (isCorrect ? "green.300" : "red.300" ): "white"}
+                    bg={flipped ? (isCorrect ? "green.300" : "red.300") : "white"}
                     p="20px"
                     borderRadius="md"
                     boxShadow="lg"
                     width="60%"
                     textAlign="center"
-                    transform = {flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
-                    transition = "transform 0.6s"
+                    transform={flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
+                    transition="transform 0.6s"
                 >
-                    
-            {!flipped ? (
-                <>{/* Question */}
+                    {!flipped ? (
+                        <>
+                            {/* Question */}
                             <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
                                 {question}
                             </Text>
 
-                            {/* Options */}
-                            <VStack spacing="4" align="stretch">
-                                {options.map((option, index) => (
-                                    <Box
-                                        key={index}
-                                        p="4"
-                                        border="2px solid"
-                                        borderColor={selectedOption === option ? "black.500" : "gray.200"}
-                                        borderRadius="md"
-                                        cursor="pointer"
-                                        _hover={{ borderColor: "blue.200" }}
-                                        onClick={() => setSelectedOption(option)}
-                                        textAlign="left"
-                                    >
-                                        <Text color="black">{option}</Text>
-                                    </Box>
-                                ))}
-                            </VStack>
+                            {/* Input Box */}
+                            <Input
+                                value={userAnswer}
+                                onChange={(e) => setUserAnswer(e.target.value)}
+                                placeholder="Enter your answer"
+                                mb="4"
+                                textAlign="center"
+                            />
 
                             {/* Submit Button */}
-                            <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
+                            <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!userAnswer.trim()}>
                                 Submit Answer
                             </Button>
                         </>
                     ) : (
-                        <Text fontSize="2xl" color="black"style={{ transform: "rotateY(180deg)" }}>
+                        <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
                             {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                         </Text>
                     )}
@@ -94,14 +79,14 @@ function GrammarPage() {
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
                 <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
-                    {/* English Button with Green Border */}
-                    <Box borderTop="4px solid green" pt="2" display="flex" alignItems="center" justifyContent="center">
+                    {/* English Button */}
+                    <Box display="flex" alignItems="center" justifyContent="center">
                         <Button as={Link} to="/english/details" w="95%" bg="white">
                             English
                         </Button>
                     </Box>
-                    {/* Math Button */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
+                    {/* Math Button  with Green Border */}
+                    <Box borderTop="4px solid green" pt="2" display="flex" alignItems="center" justifyContent="center">
                         <Button as={Link} to="/math/details" w="95%" bg="white">
                             Math
                         </Button>
@@ -118,4 +103,4 @@ function GrammarPage() {
     );
 }
 
-export default GrammarPage;
+export default MentalMathPage;

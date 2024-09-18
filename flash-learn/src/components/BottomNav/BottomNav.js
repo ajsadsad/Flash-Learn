@@ -11,7 +11,7 @@ function BottomNav() {
                 </Button>
             </GridItem>
             <GridItem w='100%' h="100%">
-                <Button as={Link} to="/math" w="100%" h="100%" bg='red.500' color="white">
+                <Button as={Link} to="/math/details" w="100%" h="100%" bg='red.500' color="white">
                     Math
                 </Button>
             </GridItem>
