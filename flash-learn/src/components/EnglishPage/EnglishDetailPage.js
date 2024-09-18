@@ -21,7 +21,6 @@ function EnglishDetailPage() {
             color="blackAlpha.800"
             fontFamily="'Baloo Bhai 2', sans-serif"
             fontWeight="bold"
-        >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
                 <Text 
@@ -151,6 +150,7 @@ function EnglishDetailPage() {
                     {/* Science Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
                         <Button w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
+                        <Button w="95%" bg="white">
                             Science
                         </Button>
                     </Box>
