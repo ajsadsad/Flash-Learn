@@ -16,17 +16,17 @@ function HomePage() {
                 Select your year group
             </Text>
 
-            <NavLink to="/English">
+            <NavLink to="/Subject">
                 <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px" >
                     K - 2
                 </Button>
             </NavLink>
-            <NavLink to="/Math">
+            <NavLink to="/Subject">
                 <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px" >
                     3 - 4
                 </Button>
             </NavLink>
-            <NavLink to="/Science">
+            <NavLink to="/Subject">
                 <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px" >
                     5 - 6
                 </Button>

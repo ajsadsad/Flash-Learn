@@ -18,6 +18,7 @@ import MentalMathPage from './components/MathPage/MentalMathPage';
 import EquationsPage from './components/MathPage/EquationsPage';
 import AnglesAndShapesPage from './components/MathPage/AnglesAndShapesPage';
 import CombinationEquationsPage from './components/MathPage/CombinationEquationsPage';
+import SubjectPage from './components/SubjectPage/SubjectPage';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
             <Routes>
               <Route path={''} element={
                 <HomePage/>
+              }/>
+              <Route path={'/subject'} element={
+                <SubjectPage/>
               }/>
               <Route path={"/english"} element={
                 <EnglishPage/>
