@@ -1,8 +1,11 @@
 import { Button } from "@chakra-ui/react";
 import { Grid, GridItem } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import useGeminiApi from '../../hooks/useGeminiApi'
 
 function BottomNav() {
+    const { geminiResponse } = useGeminiApi();
+
     return (
         <Grid templateColumns='repeat(3, 1fr)' h="100%" textAlign="center" alignItems="center">
             <GridItem w='100%' h="100%">
@@ -16,7 +19,7 @@ function BottomNav() {
                 </Button>
             </GridItem>
             <GridItem w='100%' h="100%">
-                <Button as={Link} to="/science" w="100%" h="100%" bg='blue.500' color="white">
+                <Button onClick={() => {console.log(geminiResponse)}} to="/science/details" w="100%" h="100%" bg='blue.500' color="white">
                     Science
                 </Button>
             </GridItem>
