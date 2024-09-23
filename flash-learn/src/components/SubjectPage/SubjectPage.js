@@ -1,34 +1,39 @@
-import { Button, Text } from "@chakra-ui/react"
-import { NavLink } from 'react-router-dom'
-import React from 'react'
+import { Button, Text } from "@chakra-ui/react";
+import { NavLink } from 'react-router-dom';
+import React from 'react';
 
 function SubjectPage() {
-    return(
+    return (
         <div style={{
             display: "flex",
-            flexDirection: "column",  
+            flexDirection: "column", 
             alignItems: "center",    
             justifyContent: "center", 
             height: "100vh",          
-            gap: "60px"     
+            gap: "40px" 
         }}>
             <Text fontSize="3xl" mb="20px" fontWeight="bold"> 
                 Select a Subject
             </Text>
-            <div>
-                <NavLink to="/English">
-                    <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px">
-                            English
+            
+            <div style={{
+                display: "flex",
+                flexDirection: "row", 
+                gap: "20px" 
+            }}>
+                <NavLink to="/english/details">
+                    <Button colorScheme="teal" size="6xl" fontSize="4xl" w="300px" h="100px">
+                        English
                     </Button>
                 </NavLink>
-                <NavLink to="/Math">
-                    <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px">
-                            Maths
+                <NavLink to="/math/details">
+                    <Button colorScheme="teal" size="6xl" fontSize="4xl" w="300px" h="100px">
+                        Maths
                     </Button>
                 </NavLink>
-                <NavLink to="/Science">
-                    <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px">
-                            Science
+                <NavLink to="/science">
+                    <Button colorScheme="teal" size="6xl" fontSize="4xl" w="300px" h="100px">
+                        Science
                     </Button>
                 </NavLink>
             </div>
