@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import useGeminiApi from '../../hooks/useGeminiApi'
 
 function BottomNav() {
-    const { geminiResponse } = useGeminiApi();
+    const { geminiResponse, getGeminiResponse } = useGeminiApi();
 
     return (
         <Grid templateColumns='repeat(3, 1fr)' h="100%" textAlign="center" alignItems="center">
@@ -19,7 +19,7 @@ function BottomNav() {
                 </Button>
             </GridItem>
             <GridItem w='100%' h="100%">
-                <Button onClick={() => {console.log(geminiResponse)}} to="/science/details" w="100%" h="100%" bg='blue.500' color="white">
+                <Button onClick={() => {getGeminiResponse("Provide a a multiple choice question that requires a student aged from 5 to 7 years old to select from three choices of how to fix the punctuation of a randomly generated short length sentence. Please place this into a JSON format response with the question being a category, and the answers each having its own category. "); console.log(geminiResponse) }} to="/science/details" w="100%" h="100%" bg='blue.500' color="white">
                     Science
                 </Button>
             </GridItem>
