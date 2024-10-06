@@ -1,12 +1,25 @@
-import { Button } from "@chakra-ui/react"
-import { Grid, GridItem } from '@chakra-ui/react'
+import { Button } from "@chakra-ui/react";
+import { Grid, GridItem } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 function BottomNav() {
-    return(
-        <Grid templateColumns='repeat(3, 1fr)' style={{"height" : "100%", "text-align":"center", "align-items" : "center"}} >
-            <GridItem w='100%' bg='blue.500'> English </GridItem>
-            <GridItem w='100%' bg='red.500'> Math </GridItem>
-            <GridItem w='100%' bg='blue.500'> Science </GridItem>
+    return (
+        <Grid templateColumns='repeat(3, 1fr)' h="100%" textAlign="center" alignItems="center">
+            <GridItem w='100%' h="100%">
+                <Button as={Link} to="/english/details" w="100%" h="100%" bg='blue.500' color="white">
+                    English
+                </Button>
+            </GridItem>
+            <GridItem w='100%' h="100%">
+                <Button as={Link} to="/math/details" w="100%" h="100%" bg='red.500' color="white">
+                    Math
+                </Button>
+            </GridItem>
+            <GridItem w='100%' h="100%">
+                <Button as={Link} to="/science" w="100%" h="100%" bg='blue.500' color="white">
+                    Science
+                </Button>
+            </GridItem>
         </Grid>
     );
 }
