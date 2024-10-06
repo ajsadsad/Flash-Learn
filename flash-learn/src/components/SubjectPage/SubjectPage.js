@@ -10,28 +10,26 @@ function SubjectPage() {
             alignItems: "center",    
             justifyContent: "center", 
             height: "100vh",          
-            gap: "60px"     
+            gap: "60px"       
         }}>
             <Text fontSize="3xl" mb="20px" fontWeight="bold"> 
                 Select a Subject
             </Text>
-            <div>
-                <NavLink to="/English">
+                <NavLink to="/english/details">
                     <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px">
                             English
                     </Button>
                 </NavLink>
-                <NavLink to="/Math">
+                <NavLink to="/math/details">
                     <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px">
                             Maths
                     </Button>
                 </NavLink>
-                <NavLink to="/Science">
+                <NavLink to="/science">
                     <Button colorScheme="teal" size="6xl" fontSize="4xl" w="800px" h="100px">
                             Science
                     </Button>
                 </NavLink>
-            </div>
         </div>
     );
 }
