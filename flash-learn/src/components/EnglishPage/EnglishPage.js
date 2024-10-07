@@ -1,4 +1,4 @@
-import { Grid, GridItem } from '@chakra-ui/react'; 
+import { Grid, GridItem } from '@chakra-ui/react';
 import BottomNav from "../BottomNav/BottomNav";
 
 function EnglishPage() {
@@ -25,7 +25,7 @@ function EnglishPage() {
                     Tips
                 </GridItem>
                 <GridItem bg='blue.300' area={'footer'}>
-                    <BottomNav /> {}
+                    <BottomNav />
                 </GridItem>
             </Grid>
         </div>

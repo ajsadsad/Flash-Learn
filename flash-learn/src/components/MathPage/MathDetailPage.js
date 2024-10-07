@@ -31,7 +31,7 @@ function MathDetailPage() {
                 </Button>
             </GridItem>
             <GridItem area={'subtraction'} textAlign="center">
-                <Button as={Link} to="/math/subtraction" bg="gray.200" p="20px" borderRadius="md" w="100%" h="100%" border="10px solid darkblue"> 
+                <Button as={Link} to="/math/subtraction" bg="gray.200" p="20px" borderRadius="md" w="100%" h="100%" border="10px solid darkblue">
                     <Text>Subtraction</Text>
                 </Button>
             </GridItem>
