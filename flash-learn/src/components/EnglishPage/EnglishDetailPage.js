@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, GridItem, Box, Text, Button, Icon, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaBook, FaPencilAlt, FaGlobe } from 'react-icons/fa'; // Adding icons for fun subjects
+import useMakeGeminiRequest from '../../hooks/useGeminiApi'; //import api
+import { wordbank } from './wordbank';
 
 function EnglishDetailPage() {
+    // Call the Gemini API hook
+    const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
+    const [wordOfTheDay, setWordOfTheDay] = useState('');
+
+    useEffect(() => {
+        const word = getRandomWord(wordbank.words);
+        setWordOfTheDay(word);
+    }, []); // Empty dependency array to run once on mount
+
+    // Get a random word from the word bank
+    const getRandomWord = (words) => {
+        return words[Math.floor(Math.random() * words.length)];
+    };
+
+    // Use useEffect to make the API call when the word of the day is set
+    useEffect(() => {
+        if (wordOfTheDay) {
+            const prompt = `Create a sentence using the word "${wordOfTheDay}" for educational purposes.`;
+            getGeminiResponse(prompt);
+            const prompt2 = `Write the definition of the word "${wordOfTheDay}" for educational purposes.`;
+            getGeminiResponse(prompt2);
+        }
+    }, [wordOfTheDay, getGeminiResponse]);
+    
     return (
         <Grid
             templateAreas={`"header header header"
@@ -102,7 +128,10 @@ function EnglishDetailPage() {
             <GridItem area={'wordOfTheDay'} textAlign="center">
                 <Box bg="radial-gradient(263px at 100.2% 3%, rgb(12, 85, 141) 31.1%, rgb(205, 181, 93) 36.4%, rgb(244, 102, 90) 50.9%, rgb(199, 206, 187) 60.7%, rgb(249, 140, 69) 72.5%, rgb(12, 73, 116) 72.6%);" p="30px" borderRadius="50px" boxShadow="2xl" _hover={{ transform: 'scale(1.05)', transition: '0.3s' }}>
                     <Text fontSize="2xl" mb="10px" color="white">Word of the Day</Text>
-                    <Text fontSize="5xl" fontWeight="bold" color="white">Inundate</Text>
+                    <Text fontSize="5xl" fontWeight="bold" color="white">
+                        {wordOfTheDay}
+                        {/* Inundate */}
+                        </Text>
                 </Box>
             </GridItem>
 
@@ -110,7 +139,10 @@ function EnglishDetailPage() {
             <GridItem area={'definition'} textAlign="center">
                 <Box bg="linear-gradient(111.1deg, rgb(0, 40, 70) -4.8%, rgb(255, 115, 115) 82.7%, rgb(255, 175, 123) 97.2%);" p="30px" borderRadius="50px" boxShadow="2xl" _hover={{ transform: 'scale(1.05)', transition: '0.3s' }}>
                     <Text fontSize="2xl" fontWeight="bold" color="white">Definition</Text>
-                    <Text fontSize="1xl" color="white"> "To overwhelm someone with things or people to deal with."</Text>
+                    <Text fontSize="1xl" color="white"> 
+                        {geminiResponse || "The teacher inundated the students with homework 2before the holiday break."}
+                        "To overwhelm someone with things or people to deal with."
+                        </Text>
                 </Box>
             </GridItem>
 
@@ -118,7 +150,10 @@ function EnglishDetailPage() {
             <GridItem area={'sentence'} textAlign="center">
                 <Box bg="linear-gradient(111.1deg, rgb(0, 40, 70) -4.8%, rgb(255, 115, 115) 82.7%, rgb(255, 175, 123) 97.2%);" p="30px" borderRadius="50px" boxShadow="2xl" _hover={{ transform: 'scale(1.05)', transition: '0.3s' }}>
                     <Text fontSize="2xl" fontWeight="bold" color="white">Use it in a Sentence</Text>
-                    <Text fontSize="1xl" color="white" >"The teacher inundated the students with homework before the holiday break."</Text>
+                    <Text fontSize="1xl" color="white" > 
+                        {geminiResponse || "The teacher inundated the students with homework 2before the holiday break."}
+                        {/* "The teacher inundated the students with homework before the holiday break." */}
+                    </Text>
                 </Box>
             </GridItem>
 

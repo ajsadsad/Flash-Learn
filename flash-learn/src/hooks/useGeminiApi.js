@@ -14,7 +14,7 @@ export default function useMakeGeminiRequest() {
             const text = response.text();
             setResponse(text);
         } catch {
-
+            
         } finally {
 
         }
