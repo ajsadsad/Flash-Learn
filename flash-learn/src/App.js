@@ -20,6 +20,8 @@ import EquationsPage from './components/MathPage/EquationsPage';
 import AnglesAndShapesPage from './components/MathPage/AnglesAndShapesPage';
 import CombinationEquationsPage from './components/MathPage/CombinationEquationsPage';
 import SubjectPage from './components/SubjectPage/SubjectPage';
+import DesignPage from './components/SciencePage/DesignPage';
+
 
 function App() {
   return (
@@ -83,6 +85,9 @@ function App() {
               }/>
               <Route path={"/science/details"} element={
                 <ScienceDetailPage/>
+              }/>
+              <Route path={"/science/design"} element={
+                <DesignPage/>
               }/>
             </Routes>
         </BrowserRouter>

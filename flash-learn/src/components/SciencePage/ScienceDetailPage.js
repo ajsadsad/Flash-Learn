@@ -1,33 +1,38 @@
 import React from 'react';
 import { Grid, GridItem, Box, Text, Button, Icon, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { FaBook, FaPencilAlt, FaGlobe } from 'react-icons/fa'; // Adding icons for fun subjects
+import { FaGlobe } from 'react-icons/fa';
+import { FaComputer, FaShuttleSpace } from "react-icons/fa6";
+import { GiMaterialsScience } from "react-icons/gi";
+import { SiAnimalplanet } from "react-icons/si";
+
 
 
 function ScienceDetailPage() {
     return (
         <Grid
-            templateAreas={`"header header header"
-                            "grammar spelling punctuation"
-                            "wordOfTheDay wordOfTheDay tips"
-                            "definition definition tips"
-                            "sentence sentence tips"
-                            "footer footer footer"`}
-            gridTemplateRows={'auto auto auto auto auto 1fr'}
-            gridTemplateColumns={'1fr 1fr 1fr'}
-            minH="100vh"
-            gap="6"
-            padding="20px"
-            bg="#DCDCDC"
-            color="blackAlpha.800"
-            fontFamily="'Baloo Bhai 2', sans-serif"
-            fontWeight="bold" >
+    templateAreas={`"header header header"
+                    "design earth physical"
+                    "material material living"
+                    "definition definition definition"
+                    "sentence sentence tips"
+                    "footer footer footer"`}
+    gridTemplateRows={'auto auto auto auto auto 1fr'}
+    gridTemplateColumns={'1fr 1fr 1fr'}
+    minH="100vh"
+    gap="6"
+    padding="20px"
+    bg="#282C34" 
+    color="blackAlpha.800"
+    fontFamily="'Baloo Bhai 2', sans-serif"
+    fontWeight="bold"
+>
             {/* Header */}
-            <GridItem area={'header'} textAlign="center">
+            <GridItem area={'header'} textAlign="center" paddingBottom={30}>
                 <Text 
                     fontSize="5xl" 
                     fontWeight="bold" 
-                    color="#282828" 
+                    color="white" 
                     textShadow="1px 1px 6px rgba(0,0,0,0.2)"
                 >
                     Science
@@ -36,10 +41,10 @@ function ScienceDetailPage() {
 
             
 {/* Icons Section with Borders and More Visibility */}
-<GridItem area={'grammar'} textAlign="center">
+<GridItem area={'design'} textAlign="center">
                 <Button 
                     as={Link} 
-                    to="/english/grammar" 
+                    to="/science/design" 
                     bgGradient="radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);"
                     p="20px" 
                     borderRadius="50px" 
@@ -52,12 +57,13 @@ function ScienceDetailPage() {
                     transition="0.3s"
                 >
                     <VStack spacing={3}>
-                        <Icon as={FaBook} w={10} h={10} />
+                        <Icon as={FaComputer} w={10} h={10} />
                         <Text fontSize="2xl">Design & Technology</Text>
                     </VStack>
                 </Button>
             </GridItem>
-            <GridItem area={'spelling'} textAlign="center">
+
+            <GridItem area={'earth'} textAlign="center">
                 <Button 
                     as={Link} 
                     to="/english/spelling" 
@@ -73,12 +79,13 @@ function ScienceDetailPage() {
                     transition="0.3s"
                 >
                     <VStack spacing={3}>
-                        <Icon as={FaPencilAlt} w={10} h={10} />
+                        <Icon as={FaShuttleSpace} w={10} h={10} />
                         <Text fontSize="2xl">Earth & Space</Text>
                     </VStack>
                 </Button>
             </GridItem>
-            <GridItem area={'punctuation'} textAlign="center">
+
+            <GridItem area={'physical'} textAlign="center">
                 <Button 
                     as={Link} 
                     to="/english/punctuation" 
@@ -100,9 +107,51 @@ function ScienceDetailPage() {
                 </Button>
             </GridItem>
 
+            <GridItem area={'material'} justifySelf="center" textAlign="center">
+                <Button
+                    as={Link}
+                    to="/english/spelling"
+                    bgGradient="radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);"
+                    p="20px"
+                    borderRadius="50px"
+                    w="600px"
+                    h="100%"
+                    border="4px solid #1e90ff"
+                    color="white"
+                    boxShadow="xl"
+                    _hover={{ transform: 'scale(1.1)', boxShadow: '2xl', bg: 'radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);' }}
+                    transition="0.3s"
+                    mb="20px"
+                >
+                    <VStack spacing={3}>
+                        <Icon as={GiMaterialsScience} w={10} h={10} />
+                        <Text fontSize="2xl">Material World</Text>
+                    </VStack>
+                </Button>
+            </GridItem>
 
-
-
+            <GridItem area={'living'} gridColumn="2 / span 2" justifySelf="center" textAlign="center">
+                <Button
+                    as={Link}
+                    to="/english/spelling"
+                    bgGradient="radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);"
+                    p="20px"
+                    borderRadius="50px"
+                    w="600px"
+                    h="100%"
+                    border="4px solid #1e90ff"
+                    color="white"
+                    boxShadow="xl"
+                    _hover={{ transform: 'scale(1.1)', boxShadow: '2xl', bg: 'radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);' }}
+                    transition="0.3s"
+                    mb="20px"
+                >
+                    <VStack spacing={3}>
+                        <Icon as={SiAnimalplanet} w={10} h={10} />
+                        <Text fontSize="2xl">Living World</Text>
+                    </VStack>
+                </Button>
+            </GridItem>
 
 
 
