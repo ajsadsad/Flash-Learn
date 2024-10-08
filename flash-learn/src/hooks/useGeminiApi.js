@@ -7,7 +7,7 @@ export default function useMakeGeminiRequest() {
 
     const getGeminiResponse = async (prompt) => {
         try {
-            const genAI = new GoogleGenerativeAI(process.env.REACT_APP_API_KEY);
+            const genAI = new GoogleGenerativeAI("AIzaSyC_1f8r2mROw-xgvGPq0xUUNmjql3q2yKM");
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
             const result = await model.generateContent(prompt);
             const response = await result.response;
