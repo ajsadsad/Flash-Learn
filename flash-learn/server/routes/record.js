@@ -11,11 +11,12 @@ import { ObjectId } from "mongodb";
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const router = express.Router();
 
-// This section will help you get a list of all the records.
-router.get("/", async (req, res) => {
+// This section will help you get a list of all the words.
+router.get("/word", async (req, res) => {
+  console.log("Received a request for /word");
   let collection = await db.collection("words");
-  let results = await collection.find({}).toArray();
-  res.send(results).status(200);
+  const results = await collection.find({}, { projection: { word: 1 } }).toArray(); 
+  res.json(results); // Send the word bank as JSON
 });
 
 // This section will help you get a single record by id

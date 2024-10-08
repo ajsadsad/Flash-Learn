@@ -30,9 +30,8 @@ async function run() {
     const collections = await db.listCollections().toArray();
     console.log(`Collections in ${dbName}:`);
     collections.forEach(col => console.log(` - ${col.name}`));  
-  } finally {
-    // Ensures that the client will close 
-    await client.close();
+  } catch (err) {
+    console.error(err);
   }
 }
 run().catch(console.dir);
