@@ -5,6 +5,7 @@ import HomePage from './components/HomePage/HomePage';
 import EnglishPage from './components/EnglishPage/EnglishPage'
 import MathPage from './components/MathPage/MathPage';
 import SciencePage from './components/SciencePage/SciencePage';
+import ScienceDetailPage from './components/SciencePage/ScienceDetailPage';
 import EnglishDetailPage from './components/EnglishPage/EnglishDetailPage';
 import GrammarPage from './components/EnglishPage/GrammarPage';
 import SpellingPage from './components/EnglishPage/SpellingPage';
@@ -79,6 +80,9 @@ function App() {
               }/>
               <Route path={"/science"} element={
                 <SciencePage/>
+              }/>
+              <Route path={"/science/deatils"} element={
+                <ScienceDetailPage/>
               }/>
             </Routes>
         </BrowserRouter>
