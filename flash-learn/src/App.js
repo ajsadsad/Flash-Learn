@@ -81,7 +81,7 @@ function App() {
               <Route path={"/science"} element={
                 <SciencePage/>
               }/>
-              <Route path={"/science/deatils"} element={
+              <Route path={"/science/details"} element={
                 <ScienceDetailPage/>
               }/>
             </Routes>
