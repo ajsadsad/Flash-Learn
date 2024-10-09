@@ -9,26 +9,51 @@ function EnglishDetailPage() {
     // Call the Gemini API hook
     const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
     const [wordOfTheDay, setWordOfTheDay] = useState('');
+    const [wordBank, setWordBank] = useState([]);
+
+    // useEffect(() => {
+    //     const word = getRandomWord(wordbank.words);
+    //     setWordOfTheDay(word);
+    // }, []); // Empty dependency array to run once on mount
+
+    // // Get a random word from the word bank
+    // const getRandomWord = (words) => {
+    //     return words[Math.floor(Math.random() * words.length)];
+    // };
+
+    // Use useEffect to make the API call when the word of the day is set
+    // useEffect(() => {
+    //     if (wordOfTheDay) {
+    //         const prompt = `Create a sentence using the word "${wordOfTheDay}" for educational purposes.`;
+    //         getGeminiResponse(prompt);
+    //         const prompt2 = `Write the definition of the word "${wordOfTheDay}" for educational purposes.`;
+    //         getGeminiResponse(prompt2);
+    //     }
+    // }, [wordOfTheDay, getGeminiResponse]);
 
     useEffect(() => {
-        const word = getRandomWord(wordbank.words);
-        setWordOfTheDay(word);
-    }, []); // Empty dependency array to run once on mount
+        const fetchWordBank = async () => {
+            try {
+                const response = await fetch('http://localhost:5050/record/word'); 
+                const data = await response.json();
+                setWordBank(data.words); 
+            } catch (error) {
+                console.error('Error fetching word bank:', error);
+            }
+        };
 
-    // Get a random word from the word bank
+        fetchWordBank();
+    }, []);
+
+    useEffect(() => {
+        const word = getRandomWord(wordBank);
+        setWordOfTheDay(word);
+    }, [wordBank]);
+
     const getRandomWord = (words) => {
         return words[Math.floor(Math.random() * words.length)];
     };
 
-    // Use useEffect to make the API call when the word of the day is set
-    useEffect(() => {
-        if (wordOfTheDay) {
-            const prompt = `Create a sentence using the word "${wordOfTheDay}" for educational purposes.`;
-            getGeminiResponse(prompt);
-            const prompt2 = `Write the definition of the word "${wordOfTheDay}" for educational purposes.`;
-            getGeminiResponse(prompt2);
-        }
-    }, [wordOfTheDay, getGeminiResponse]);
     
     return (
         <Grid
