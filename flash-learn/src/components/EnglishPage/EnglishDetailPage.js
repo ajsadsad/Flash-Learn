@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaBook, FaPencilAlt, FaGlobe } from 'react-icons/fa'; // Adding icons for fun subjects
 import useMakeGeminiRequest from '../../hooks/useGeminiApi'; //import api
 import { wordbank } from './wordbank';
+import BottomNav from '../BottomNav/BottomNav';
 
 function EnglishDetailPage() {
     // Call the Gemini API hook
@@ -169,26 +170,7 @@ function EnglishDetailPage() {
 
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
-                <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
-                    {/* English Button with Green Border */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
-                            English
-                        </Button>
-                    </Box>
-                    {/* Math Button */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
-                            Math
-                        </Button>
-                    </Box>
-                    {/* Science Button */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
-                            Science
-                        </Button>
-                    </Box>
-                </Grid>
+                <BottomNav/>
             </GridItem>
         </Grid>
     );
