@@ -17,6 +17,10 @@ export default function useMakeGeminiRequest() {
         If the focus is grammar, the question should relate to sentence structure, verb conjugation, or correct word usage.
         If the focus is punctuation, the question should be about identifying or using punctuation marks like commas, periods, semicolons, dash, apostrophe, question mark, exclamation mark.
         If the focus is spelling, the question should involve identifying correct spellings or choosing between correctly and incorrectly spelled words.
+        If the focus is addition, the question should involve adding two numbers together or choosing the correct answer from the equation.
+        If the focus is subtraction, the question should involve subtracting two numbers from each other or choosing the correct answer from the equation.
+        If the focus is multiplication, the question should involve multiplying two numbers or choosing the correct answer from the equation.
+        If the focus is division, the question should involve dividing two numbers choosing the correct answer from the equation.
         The response should be in JSON format with "question" as a key, "answers" as an array of strings, and "correctAnswer" as the correct answer.`; 
 
 
