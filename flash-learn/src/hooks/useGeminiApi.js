@@ -13,6 +13,7 @@ export default function useMakeGeminiRequest() {
             const prompt = `
         Generate a ${questionType} question for ${subject} at ${level}.
         The question and all answers should be text-based only.
+        There should only be three question options.
         Please clearly specify which answer is correct in the response.
         If the focus is grammar, the question should relate to sentence structure, verb conjugation, or correct word usage.
         If the focus is punctuation, the question should be about identifying or using punctuation marks like commas, periods, semicolons, dash, apostrophe, question mark, exclamation mark.

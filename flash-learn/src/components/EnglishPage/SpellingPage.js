@@ -52,27 +52,33 @@ function SpellingPage() {
             gridTemplateRows={'auto 1fr auto'}
             gridTemplateColumns={'1fr 1fr 1fr'}
             minH="100vh"
-            gap="4"
+            gap="6"
             padding="20px"
+            bg="#DCDCDC"  
             color="blackAlpha.700"
+            fontFamily="'Baloo Bhai 2', sans-serif"
             fontWeight="bold"
         >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
-                <Text fontSize="4xl" fontWeight="bold" color="white">Spelling</Text>
+                <Text fontSize="5xl" fontWeight="bold" color="#282828" textShadow="1px 1px 6px rgba(0,0,0,0.2)">
+                    Spelling
+                </Text> 
             </GridItem>
 
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
-                <Box
-                    bg={flipped ? (isCorrect ? "green.300" : "red.300") : "white"}
-                    p="20px"
+            <Box
+                    bg={flipped ? (isCorrect ? "green.300" : "red.500") : "white"}
+                    p="30px"
                     borderRadius="md"
-                    boxShadow="lg"
-                    width="60%"
+                    boxShadow="2xl"
+                    width="80%"  
+                    height="500px" 
                     textAlign="center"
                     transform={flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
-                    transition="transform 0.6s"
+                    transition="transform 0.6s, background-color 0.6s"
+                    bgGradient={!flipped && "linear-gradient(111.1deg, rgb(255, 175, 123) -4.8%, rgb(255, 115, 115) 82.7%, rgb(0, 40, 70) 97.2%)"} 
                 >
                     {!flipped ? (
                         <>
@@ -101,10 +107,10 @@ function SpellingPage() {
                             </VStack>
 
                             {/* Submit Button */}
-                            <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
-                                Submit Answer
-                            </Button>
-                        </>
+        <Button mt="6" _hover={{ transform: 'scale(1.1)'}} color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
+            Submit Answer
+        </Button>
+    </>
                     ) : (
                         <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
                             {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
@@ -116,21 +122,21 @@ function SpellingPage() {
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
                 <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
-                    {/* English Button with Green Border */}
-                    <Box borderTop="4px solid green" pt="2" display="flex" alignItems="center" justifyContent="center">
-                        <Button as={Link} to="/english/details" w="95%" bg="white">
+                    {/* English Button*/}
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                        <Button as={Link} to="/english/details" w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
                             English
                         </Button>
                     </Box>
                     {/* Math Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button as={Link} to="/math/details" w="95%" bg="white">
+                        <Button as={Link} to="/math/details" w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
                             Math
                         </Button>
                     </Box>
                     {/* Science Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white">
+                        <Button w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
                             Science
                         </Button>
                     </Box>
