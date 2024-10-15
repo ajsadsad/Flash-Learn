@@ -13,25 +13,31 @@ function GrammarPage() {
 
     const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
 
+        // Trigger the Gemini API call on component mount
+        useEffect(() => {
+            getGeminiResponse('English', 'Kindergarten to Year 2', 'multiple choice');
+        }, [getGeminiResponse]);
     
-    useEffect(() => {
-        getGeminiResponse('English', 'Kindergarten to Year 2', 'multiple choice');
-    }, [getGeminiResponse]); 
-
-
-    useEffect(() => {
-        if (geminiResponse) {
-            setQuestion(geminiResponse.question); 
-            setOptions(geminiResponse.answers);  
-            setCorrectAnswer(geminiResponse.correctAnswer);  
-        }
-    }, [geminiResponse]);
+        // Update state based on the API response
+        useEffect(() => {
+            if (geminiResponse) {
+                setQuestion(geminiResponse.question || '');  
+                setOptions(geminiResponse.answers || []);  
+                setCorrectAnswer(geminiResponse.correctAnswer || ''); 
+            }
+        }, [geminiResponse]);  
+    
 
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
         setIsCorrect(answerIsCorrect);
         setFlipped(true);
     };
+
+        // Conditional rendering to check if the response has returned
+        if (!geminiResponse) {
+            return <Text>Loading...</Text>; 
+        }
 
     return (
         <Grid
