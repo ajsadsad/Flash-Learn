@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import useMakeGeminiRequest from '../../hooks/useGeminiApi';
 
 function GrammarPage() {
     const [selectedOption, setSelectedOption] = useState('');
     const [flipped, setFlipped] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
+    const [options, setOptions] = useState([]);
+    const [question, setQuestion] = useState('');
+    const [correctAnswer, setCorrectAnswer] = useState('');
 
-    // Example question and options
-    const question = "Select the correct use of a comma";
-    const options = [
-        "The dog, barked loudly at the cat.",
-        "The dog barked, loudly at the cat.",
-        "The dog barked loudly, at the cat."
-    ];
-    const correctAnswer = "The dog barked loudly, at the cat.";
+    const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
+
+    
+    useEffect(() => {
+        getGeminiResponse('English', 'Kindergarten to Year 2', 'multiple choice');
+    }, [getGeminiResponse]); 
+
+
+    useEffect(() => {
+        if (geminiResponse) {
+            setQuestion(geminiResponse.question); 
+            setOptions(geminiResponse.answers);  
+            setCorrectAnswer(geminiResponse.correctAnswer);  
+        }
+    }, [geminiResponse]);
 
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
         setIsCorrect(answerIsCorrect);
-        setFlipped(true); 
+        setFlipped(true);
     };
 
     return (
@@ -37,24 +48,24 @@ function GrammarPage() {
         >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
-                <Text fontSize="4xl" fontWeight="bold" color="white">Grammar</Text> 
+                <Text fontSize="4xl" fontWeight="bold" color="white">Grammar</Text>
             </GridItem>
 
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
                 <Box
-                    bg= {flipped ? (isCorrect ? "green.300" : "red.300" ): "white"}
+                    bg={flipped ? (isCorrect ? "green.300" : "red.300") : "white"}
                     p="20px"
                     borderRadius="md"
                     boxShadow="lg"
                     width="60%"
                     textAlign="center"
-                    transform = {flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
-                    transition = "transform 0.6s"
+                    transform={flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
+                    transition="transform 0.6s"
                 >
-                    
-            {!flipped ? (
-                <>{/* Question */}
+                    {!flipped ? (
+                        <>
+                            {/* Question */}
                             <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
                                 {question}
                             </Text>
@@ -84,7 +95,7 @@ function GrammarPage() {
                             </Button>
                         </>
                     ) : (
-                        <Text fontSize="2xl" color="black"style={{ transform: "rotateY(180deg)" }}>
+                        <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
                             {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                         </Text>
                     )}
@@ -119,4 +130,3 @@ function GrammarPage() {
 }
 
 export default GrammarPage;
-
