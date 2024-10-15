@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import useMakeGeminiRequest from '../../hooks/useGeminiApi';
+
 
 function GrammarPage() {
     const [selectedOption, setSelectedOption] = useState('');
@@ -11,13 +13,15 @@ function GrammarPage() {
     const [question, setQuestion] = useState('');
     const [correctAnswer, setCorrectAnswer] = useState('');
 
+
     const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
 
-        // Trigger the Gemini API call on component mount for grammar-related questions
+
+        // Trigger the Gemini API call on component mount
         useEffect(() => {
             getGeminiResponse('English', 'Kindergarten to Year 2', 'grammar multiple choice');
         }, [getGeminiResponse]);
-    
+   
         // Update state based on the API response
         useEffect(() => {
             if (geminiResponse) {
@@ -26,25 +30,30 @@ function GrammarPage() {
                 setCorrectAnswer(geminiResponse.correctAnswer || geminiResponse.answers[0]);
                 console.log("Gemini Response:", geminiResponse); // Debugging the response
 
+
             }
         }, [geminiResponse]);  
-    
+   
+
 
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
-        
+       
         // Log to ensure correct comparison
         console.log("Selected option:", selectedOption);
         console.log("Correct answer:", correctAnswer);
+
 
         setIsCorrect(answerIsCorrect);
         setFlipped(true);
     };
 
+
         // Conditional rendering to check if the response has returned
         if (!geminiResponse) {
-            return <Text>Loading...</Text>; 
+            return <Text>Loading...</Text>;
         }
+
 
     return (
         <Grid
@@ -64,6 +73,7 @@ function GrammarPage() {
                 <Text fontSize="4xl" fontWeight="bold" color="white">Grammar</Text>
             </GridItem>
 
+
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
                 <Box
@@ -82,6 +92,7 @@ function GrammarPage() {
         <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
             {question}
         </Text>
+
 
         {/* Options */}
         <VStack spacing="4" align="stretch">
@@ -105,6 +116,7 @@ function GrammarPage() {
             ))}
         </VStack>
 
+
         {/* Submit Button */}
         <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
             Submit Answer
@@ -117,6 +129,7 @@ function GrammarPage() {
 )}
                 </Box>
             </GridItem>
+
 
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
@@ -145,6 +158,8 @@ function GrammarPage() {
     );
 }
 
+
 export default GrammarPage;
+
 
  
