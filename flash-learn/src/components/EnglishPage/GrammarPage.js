@@ -13,9 +13,9 @@ function GrammarPage() {
 
     const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
 
-        // Trigger the Gemini API call on component mount
+        // Trigger the Gemini API call on component mount for grammar-related questions
         useEffect(() => {
-            getGeminiResponse('English', 'Kindergarten to Year 2', 'multiple choice');
+            getGeminiResponse('English', 'Kindergarten to Year 2', 'grammar multiple choice');
         }, [getGeminiResponse]);
     
         // Update state based on the API response
@@ -23,13 +23,20 @@ function GrammarPage() {
             if (geminiResponse) {
                 setQuestion(geminiResponse.question || '');  
                 setOptions(geminiResponse.answers || []);  
-                setCorrectAnswer(geminiResponse.correctAnswer || ''); 
+                setCorrectAnswer(geminiResponse.correctAnswer || geminiResponse.answers[0]);
+                console.log("Gemini Response:", geminiResponse); // Debugging the response
+
             }
         }, [geminiResponse]);  
     
 
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
+        
+        // Log to ensure correct comparison
+        console.log("Selected option:", selectedOption);
+        console.log("Correct answer:", correctAnswer);
+
         setIsCorrect(answerIsCorrect);
         setFlipped(true);
     };
@@ -72,39 +79,42 @@ function GrammarPage() {
                     {!flipped ? (
                         <>
                             {/* Question */}
-                            <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
-                                {question}
-                            </Text>
+        <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
+            {question}
+        </Text>
 
-                            {/* Options */}
-                            <VStack spacing="4" align="stretch">
-                                {options.map((option, index) => (
-                                    <Box
-                                        key={index}
-                                        p="4"
-                                        border="2px solid"
-                                        borderColor={selectedOption === option ? "black.500" : "gray.200"}
-                                        borderRadius="md"
-                                        cursor="pointer"
-                                        _hover={{ borderColor: "blue.200" }}
-                                        onClick={() => setSelectedOption(option)}
-                                        textAlign="left"
-                                    >
-                                        <Text color="black">{option}</Text>
-                                    </Box>
-                                ))}
-                            </VStack>
+        {/* Options */}
+        <VStack spacing="4" align="stretch">
+            {options.map((option, index) => (
+                <Box
+                    key={index}
+                    p="4"
+                    border="2px solid"
+                    borderColor={selectedOption === option ? "black.500" : "gray.200"}
+                    borderRadius="md"
+                    cursor="pointer"
+                    _hover={{ borderColor: "blue.200" }}
+                    onClick={() => setSelectedOption(option)}
+                    textAlign="left"
+                >
+                    {/* Check if the option is an object or a string */}
+                    <Text color="black">
+                        {typeof option === 'object' ? option.text : option}
+                    </Text>
+                </Box>
+            ))}
+        </VStack>
 
-                            {/* Submit Button */}
-                            <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
-                                Submit Answer
-                            </Button>
-                        </>
-                    ) : (
-                        <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
-                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
-                        </Text>
-                    )}
+        {/* Submit Button */}
+        <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
+            Submit Answer
+        </Button>
+    </>
+) : (
+    <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+        {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+    </Text>
+)}
                 </Box>
             </GridItem>
 
@@ -136,3 +146,5 @@ function GrammarPage() {
 }
 
 export default GrammarPage;
+
+ 

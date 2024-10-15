@@ -1,27 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import useMakeGeminiRequest from '../../hooks/useGeminiApi';
 
 function PunctuationPage() {
     const [selectedOption, setSelectedOption] = useState('');
     const [flipped, setFlipped] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
+    const [options, setOptions] = useState([]);
+    const [question, setQuestion] = useState('');
+    const [correctAnswer, setCorrectAnswer] = useState('');
 
-    // Example question and options
-    const question = "Select the semi colon below";
-    const options = [
-        ":",
-        ";",
-        "'"
-    ];
+    const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
 
-    const correctAnswer = ";";
+    // Trigger the Gemini API call on component mount for punctuation-related questions
+    useEffect(() => {
+        getGeminiResponse('English', 'Kindergarten to Year 2', 'punctuation multiple choice');
+    }, [getGeminiResponse]);
+    
+    // Update state based on the API response
+    useEffect(() => {
+        if (geminiResponse) {
+            setQuestion(geminiResponse.question || '');  
+            setOptions(geminiResponse.answers || []);  
+            setCorrectAnswer(geminiResponse.correctAnswer || geminiResponse.answers[0]);
+            console.log("Gemini Response:", geminiResponse); // Debugging the response
+        }
+    }, [geminiResponse]);  
 
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
+        
+        // Log to ensure correct comparison
+        console.log("Selected option:", selectedOption);
+        console.log("Correct answer:", correctAnswer);
+
         setIsCorrect(answerIsCorrect);
-        setFlipped(true); 
+        setFlipped(true);
     };
+
+    // Conditional rendering to check if the response has returned
+    if (!geminiResponse) {
+        return <Text>Loading...</Text>; 
+    }
 
     return (
         <Grid
@@ -38,24 +59,24 @@ function PunctuationPage() {
         >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
-                <Text fontSize="4xl" fontWeight="bold" color="white">Punctuation</Text> 
+                <Text fontSize="4xl" fontWeight="bold" color="white">Punctuation</Text>
             </GridItem>
 
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
                 <Box
-                    bg= {flipped ? (isCorrect ? "green.300" : "red.300" ): "white"}
+                    bg={flipped ? (isCorrect ? "green.300" : "red.300") : "white"}
                     p="20px"
                     borderRadius="md"
                     boxShadow="lg"
                     width="60%"
                     textAlign="center"
-                    transform = {flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
-                    transition = "transform 0.6s"
+                    transform={flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
+                    transition="transform 0.6s"
                 >
-                    
-            {!flipped ? (
-                <>{/* Question */}
+                    {!flipped ? (
+                        <>
+                            {/* Question */}
                             <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
                                 {question}
                             </Text>
@@ -74,7 +95,7 @@ function PunctuationPage() {
                                         onClick={() => setSelectedOption(option)}
                                         textAlign="left"
                                     >
-                                        <Text color="black">{option}</Text>
+                                        <Text color="black">{typeof option === 'object' ? option.text : option}</Text>
                                     </Box>
                                 ))}
                             </VStack>
@@ -85,8 +106,8 @@ function PunctuationPage() {
                             </Button>
                         </>
                     ) : (
-                        <Text fontSize="2xl" color="black"style={{ transform: "rotateY(180deg)" }}>
-                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is ${correctAnswer}`}
+                        <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                         </Text>
                     )}
                 </Box>
