@@ -135,15 +135,15 @@ function EnglishDetailPage() {
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
                 <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
-                    {/* English Button with Green Border */}
+                    {/* English Button*/}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
+                        <Button as={Link} to="/english/details" w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
                             English
                         </Button>
                     </Box>
                     {/* Math Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
+                        <Button as={Link} to="/math/details" w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
                             Math
                         </Button>
                     </Box>
