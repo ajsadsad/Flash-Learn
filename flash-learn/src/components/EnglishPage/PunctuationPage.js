@@ -112,10 +112,18 @@ function PunctuationPage() {
                             </Button>
                         </>
                     ) : (
-                        <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
-                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
-                        </Text>
-                    )}
+                        <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        height="100%"
+                        width="100%"
+                        >
+                            <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+                                {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+                                </Text>
+                        </Box>
+)}
                 </Box>
             </GridItem>
 

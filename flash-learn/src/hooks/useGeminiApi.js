@@ -12,16 +12,18 @@ export default function useMakeGeminiRequest() {
 
             const prompt = `
         Generate a ${questionType} question for ${subject} at ${level}.
-        The question and all answers should be text-based only.
+        The question and all answers should be text-based and equation based only.
         There should only be three question options.
         Please clearly specify which answer is correct in the response.
         If the focus is grammar, the question should relate to sentence structure, verb conjugation, or correct word usage.
         If the focus is punctuation, the question should be about identifying or using punctuation marks like commas, periods, semicolons, dash, apostrophe, question mark, exclamation mark.
         If the focus is spelling, the question should involve identifying correct spellings or choosing between correctly and incorrectly spelled words.
-        If the focus is addition, the question should involve adding two numbers together or choosing the correct answer from the equation.
-        If the focus is subtraction, the question should involve subtracting two numbers from each other or choosing the correct answer from the equation.
-        If the focus is multiplication, the question should involve multiplying two numbers or choosing the correct answer from the equation.
-        If the focus is division, the question should involve dividing two numbers choosing the correct answer from the equation.
+        If the focus is addition, the question should involve simple arithmetic addition equations, focusing on adding single-digit numbers.
+        If the focus is subtraction, the question should involve simple arithmetic subtraction equations, focusing on subtracting single-digit numbers.
+        If the focus is multiplication, the question should involve simple arithmetic multiplication equations, focusing on multiplying single-digit numbers.
+        If the focus is division, the question should involve simple arithmetic division equations, focusing on dividing single-digit numbers.
+        If the focus is mental math, the question should involve simple mental arithmetic equations, such as quick addition, subtraction, or recognising patterns in numbers. 
+        If the focus is equations, The question should involve a simple arithmetic equation, where the student needs to solve for a single variable (e.g., a + 4 = 2). The response should be in the form of a direct equation with one variable, and the student needs to find the value of the variable.
         The response should be in JSON format with "question" as a key, "answers" as an array of strings, and "correctAnswer" as the correct answer.`; 
 
 
