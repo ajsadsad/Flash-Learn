@@ -18,7 +18,7 @@ function EquationsPage() {
 
         // Trigger the Gemini API call on component mount
         useEffect(() => {
-            getGeminiResponse('Math', 'Kindergarten to Year 2', 'equations multiple choice');
+            getGeminiResponse('Math', 'Kindergarten to Year 2', 'algebra multiple choice');
         }, [getGeminiResponse]);
    
         // Update state based on the API response
@@ -48,7 +48,7 @@ function EquationsPage() {
     };
 
 
-        // Conditional rendering to check if the response has returned
+        //Check if the response has returned
         if (!geminiResponse) {
             return <Text>Loading...</Text>;
         }

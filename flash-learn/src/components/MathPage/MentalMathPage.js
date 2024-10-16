@@ -30,11 +30,20 @@ function MentalMathPage() {
         setIsCorrect(answerIsCorrect);
         setFlipped(true);
     };
+    
+    
 
-    // Conditional rendering to check if the response has returned
+    //Check if the response has returned
     if (!geminiResponse) {
         return <Text>Loading...</Text>;
     }
+    const handleNext = () => {
+        // Reset the state and get a new question
+        setUserAnswer('');
+        setFlipped(false);
+        setIsCorrect(null);
+        getGeminiResponse('Math', 'Kindergarten to Year 2', 'addition multiple choice');
+    };
 
     return (
         <Grid
@@ -87,24 +96,31 @@ function MentalMathPage() {
                             />
 
                             {/* Submit Button */}
-                            <Button mt="6" color="blackAlpha.700" onClick={handleSubmit} isDisabled={!userAnswer.trim()}>
+                            <Button mt="6" _hover={{ transform: 'scale(1.1)'}} color="blackAlpha.700" onClick={handleSubmit} isDisabled={!setUserAnswer}>
                                 Submit Answer
                             </Button>
                         </>
                     ) : (
-                        <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        height="100%"
-                        width="100%"
-                        >
-                        <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
-                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
-                        </Text>
-                        </Box>
+                        <>
+                            <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
+                                <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+                                    {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+                                </Text>
+                            </Box>
+                        </>
                     )}
                 </Box>
+
+                {/* Next Button */}
+            {flipped && (
+                <GridItem area={'next-button'} display="flex" justifyContent="center" alignItems="center"  _hover={{ transform: 'scale(1.1)'}}>
+                    <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px"  >
+                        <Text fontSize ="2x1" colour="black">
+                        Next 
+                        </Text>
+                    </Button>
+                </GridItem>
+            )}
             </GridItem>
 
            {/* Bottom Navigation */}

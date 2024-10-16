@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import useMakeGeminiRequest from '../../hooks/useGeminiApi';
-
 
 function AdditionPage() {
     const [selectedOption, setSelectedOption] = useState('');
@@ -13,47 +11,40 @@ function AdditionPage() {
     const [question, setQuestion] = useState('');
     const [correctAnswer, setCorrectAnswer] = useState('');
 
-
     const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
 
+    // Trigger the Gemini API call on component mount
+    useEffect(() => {
+        getGeminiResponse('Math', 'Kindergarten to Year 2', 'addition multiple choice');
+    }, [getGeminiResponse]);
 
-        // Trigger the Gemini API call on component mount
-        useEffect(() => {
-            getGeminiResponse('Math', 'Kindergarten to Year 2', 'addition multiple choice');
-        }, [getGeminiResponse]);
-   
-        // Update state based on the API response
-        useEffect(() => {
-            if (geminiResponse) {
-                setQuestion(geminiResponse.question || '');  
-                setOptions(geminiResponse.answers || []);  
-                setCorrectAnswer(geminiResponse.correctAnswer || geminiResponse.answers[0]);
-                console.log("Gemini Response:", geminiResponse); // Debugging the response
-
-
-            }
-        }, [geminiResponse]);  
-   
-
+    // Update state based on the API response
+    useEffect(() => {
+        if (geminiResponse) {
+            setQuestion(geminiResponse.question || '');  
+            setOptions(geminiResponse.answers || []);  
+            setCorrectAnswer(geminiResponse.correctAnswer || geminiResponse.answers[0]);
+        }
+    }, [geminiResponse]);
 
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
-       
-        // Log to ensure correct comparison
-        console.log("Selected option:", selectedOption);
-        console.log("Correct answer:", correctAnswer);
-
-
         setIsCorrect(answerIsCorrect);
         setFlipped(true);
     };
 
+    const handleNext = () => {
+        // Reset the state and get a new question
+        setSelectedOption('');
+        setFlipped(false);
+        setIsCorrect(null);
+        getGeminiResponse('Math', 'Kindergarten to Year 2', 'addition multiple choice');
+    };
 
-        // Conditional rendering to check if the response has returned
-        if (!geminiResponse) {
-            return <Text>Loading...</Text>;
-        }
-
+    //Check if the response has returned 
+    if (!geminiResponse) {
+        return <Text>Loading...</Text>;
+    }
 
     return (
         <Grid
@@ -75,11 +66,9 @@ function AdditionPage() {
                 <Text fontSize="4xl" fontWeight="bold" color="black">Addition</Text> 
             </GridItem>
 
-
-
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
-            <Box
+                <Box
                     bg={flipped ? (isCorrect ? "green.300" : "red.500") : "white"}
                     p="30px"
                     borderRadius="md"
@@ -94,60 +83,64 @@ function AdditionPage() {
                     {!flipped ? (
                         <>
                             {/* Question */}
-        <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
-            {question}
-        </Text>
+                            <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
+                                {question}
+                            </Text>
 
+                            {/* Options */}
+                            <VStack spacing="4" align="stretch">
+                                {options.map((option, index) => (
+                                    <Box
+                                        key={index}
+                                        p="4"
+                                        border="2px solid"
+                                        borderColor={selectedOption === option ? "black.500" : "gray.200"}
+                                        borderRadius="md"
+                                        cursor="pointer"
+                                        _hover={{ borderColor: "blue.200" }}
+                                        onClick={() => setSelectedOption(option)}
+                                        textAlign="left"
+                                    >
+                                        {/* Check if the option is an object or a string */}
+                                        <Text color="black">
+                                            {typeof option === 'object' ? option.text : option}
+                                        </Text>
+                                    </Box>
+                                ))}
+                            </VStack>
 
-        {/* Options */}
-        <VStack spacing="4" align="stretch">
-            {options.map((option, index) => (
-                <Box
-                    key={index}
-                    p="4"
-                    border="2px solid"
-                    borderColor={selectedOption === option ? "black.500" : "gray.200"}
-                    borderRadius="md"
-                    cursor="pointer"
-                    _hover={{ borderColor: "blue.200" }}
-                    onClick={() => setSelectedOption(option)}
-                    textAlign="left"
-                >
-                    {/* Check if the option is an object or a string */}
-                    <Text color="black">
-                        {typeof option === 'object' ? option.text : option}
-                    </Text>
-                </Box>
-            ))}
-        </VStack>
-
-
-        {/* Submit Button */}
-        <Button mt="6" _hover={{ transform: 'scale(1.1)'}} color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
+                            {/* Submit Button */}
+                            <Button mt="6" _hover={{ transform: 'scale(1.1)'}} color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
                                 Submit Answer
                             </Button>
                         </>
                     ) : (
-                        <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        height="100%"
-                        width="100%"
-                        >
-                            <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
-                                {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+                        <>
+                            <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
+                                <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+                                    {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                                 </Text>
-                        </Box>
-)}
+                            </Box>
+                        </>
+                    )}
                 </Box>
-            </GridItem>
 
+                {/* Next Button */}
+            {flipped && (
+                <GridItem area={'next-button'} display="flex" justifyContent="center" alignItems="center"  _hover={{ transform: 'scale(1.1)'}}>
+                    <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px"  >
+                        <Text fontSize ="2x1" colour="black">
+                        Next 
+                        </Text>
+                    </Button>
+                </GridItem>
+            )}
+            </GridItem>
 
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
                 <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
-                    {/* English Button*/}
+                    {/* English Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
                         <Button as={Link} to="/english/details" w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
                             English
@@ -155,7 +148,7 @@ function AdditionPage() {
                     </Box>
                     {/* Math Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button as={Link} to="/math/details"w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
+                        <Button as={Link} to="/math/details" w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
                             Math
                         </Button>
                     </Box>
@@ -171,8 +164,4 @@ function AdditionPage() {
     );
 }
 
-
 export default AdditionPage;
-
-
- 

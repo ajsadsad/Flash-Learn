@@ -48,8 +48,16 @@ function SubtractionPage() {
         setFlipped(true);
     };
 
+    const handleNext = () => {
+        // Reset the state and get a new question
+        setSelectedOption('');
+        setFlipped(false);
+        setIsCorrect(null);
+        getGeminiResponse('Math', 'Kindergarten to Year 2', 'subtraction multiple choice');
+    };
 
-        // Conditional rendering to check if the response has returned
+
+        //Check if the response has returned
         if (!geminiResponse) {
             return <Text>Loading...</Text>;
         }
@@ -127,19 +135,26 @@ function SubtractionPage() {
                             </Button>
                         </>
                     ) : (
-                        <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        height="100%"
-                        width="100%"
-                        >
-                            <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
-                                {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+                        <>
+                            <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
+                                <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+                                    {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                                 </Text>
-                        </Box>
-)}
+                            </Box>
+                        </>
+                    )}
                 </Box>
+
+                {/* Next Button */}
+            {flipped && (
+                <GridItem area={'next-button'} display="flex" justifyContent="center" alignItems="center"  _hover={{ transform: 'scale(1.1)'}}>
+                    <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px"  >
+                        <Text fontSize ="2x1" colour="black">
+                        Next 
+                        </Text>
+                    </Button>
+                </GridItem>
+            )}
             </GridItem>
 
 

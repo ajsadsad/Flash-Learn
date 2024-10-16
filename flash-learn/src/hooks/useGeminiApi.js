@@ -23,7 +23,9 @@ export default function useMakeGeminiRequest() {
         If the focus is multiplication, the question should involve simple arithmetic multiplication equations, focusing on multiplying single-digit numbers.
         If the focus is division, the question should involve simple arithmetic division equations, focusing on dividing single-digit numbers.
         If the focus is mental math, the question should involve simple mental arithmetic equations, such as quick addition, subtraction, or recognising patterns in numbers. 
-        If the focus is equations, The question should involve a simple arithmetic equation, where the student needs to solve for a single variable (e.g., a + 4 = 2). The response should be in the form of a direct equation with one variable, and the student needs to find the value of the variable.
+        If the focus is algebra, the question should involve a simple arithmetic equation, where the user needs to solve for a single variable (e.g., a + 4 = 2).
+        If the focus is combination equations, the question should involve all simple arthimetic such as addition, subtraction, multiplication, divison or simple arithmetic mental math or a simple arithmetic equation, where the user needs to solve for a single variable (e.g., a + 4 = 2). 
+        If the focus is on angles and shapes, the question should involve identifying geometric shapes (e.g., triangle, square, circle, rectangle, semicircle, rhombus, trapezoid, pentagon, hexagon, octagon, parrallelogram, kite) or identifying angles (e.g., acute, obtuse, right) or cover basic geometry principles such as identifying shapes, understanding angles, or recognizing symmetry.
         The response should be in JSON format with "question" as a key, "answers" as an array of strings, and "correctAnswer" as the correct answer.`; 
 
 

@@ -48,8 +48,16 @@ function GrammarPage() {
         setFlipped(true);
     };
 
+    const handleNext = () => {
+        // Reset the state and get a new question
+        setSelectedOption('');
+        setFlipped(false);
+        setIsCorrect(null);
+        getGeminiResponse('English', 'Kindergarten to Year 2', 'grammar multiple choice');
+    };
 
-        // Conditional rendering to check if the response has returned
+
+        //Check if the response has returned
         if (!geminiResponse) {
             return <Text>Loading...</Text>;
         }
@@ -80,7 +88,7 @@ function GrammarPage() {
 
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
-            <Box
+                <Box
                     bg={flipped ? (isCorrect ? "green.300" : "red.500") : "white"}
                     p="30px"
                     borderRadius="md"
@@ -94,54 +102,59 @@ function GrammarPage() {
                 >
                     {!flipped ? (
                         <>
-        {/* Question */}
-        <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
-            {question}
-        </Text>
+                            {/* Question */}
+                            <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
+                                {question}
+                            </Text>
 
+                            {/* Options */}
+                            <VStack spacing="4" align="stretch">
+                                {options.map((option, index) => (
+                                    <Box
+                                        key={index}
+                                        p="4"
+                                        border="2px solid"
+                                        borderColor={selectedOption === option ? "black.500" : "gray.200"}
+                                        borderRadius="md"
+                                        cursor="pointer"
+                                        _hover={{ borderColor: "blue.200" }}
+                                        onClick={() => setSelectedOption(option)}
+                                        textAlign="left"
+                                    >
+                                        {/* Check if the option is an object or a string */}
+                                        <Text color="black">
+                                            {typeof option === 'object' ? option.text : option}
+                                        </Text>
+                                    </Box>
+                                ))}
+                            </VStack>
 
-        {/* Options */}
-        <VStack spacing="4" align="stretch">
-            {options.map((option, index) => (
-                <Box
-                    key={index}
-                    p="4"
-                    border="2px solid"
-                    borderColor={selectedOption === option ? "black.500" : "gray.200"}
-                    borderRadius="md"
-                    cursor="pointer"
-                    _hover={{ borderColor: "blue.200" }}
-                    onClick={() => setSelectedOption(option)}
-                    textAlign="left"
-                >
-                    {/* Check if the option is an object or a string */}
-                    <Text color="black">
-                        {typeof option === 'object' ? option.text : option}
-                    </Text>
+                            {/* Submit Button */}
+                            <Button mt="6" _hover={{ transform: 'scale(1.1)'}} color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
+                                Submit Answer
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
+                                <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+                                    {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+                                </Text>
+                            </Box>
+                        </>
+                    )}
                 </Box>
-            ))}
-        </VStack>
 
-
-        {/* Submit Button */}
-        <Button mt="6" _hover={{ transform: 'scale(1.1)'}} color="blackAlpha.700" onClick={handleSubmit} isDisabled={!selectedOption}>
-            Submit Answer
-        </Button>
-    </>
-) : (
-    <Box
-    display="flex"
-    justifyContent="center"
-    alignItems="center"
-    height="100%"
-    width="100%"
-    >
-    <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
-        {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
-    </Text>
-    </Box>
-)}
-                </Box>
+                {/* Next Button */}
+            {flipped && (
+                <GridItem area={'next-button'} display="flex" justifyContent="center" alignItems="center"  _hover={{ transform: 'scale(1.1)'}}>
+                    <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px"  >
+                        <Text fontSize ="2x1" colour="black">
+                        Next 
+                        </Text>
+                    </Button>
+                </GridItem>
+            )}
             </GridItem>
 
 

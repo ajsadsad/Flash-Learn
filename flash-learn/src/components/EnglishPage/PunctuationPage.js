@@ -39,7 +39,15 @@ function PunctuationPage() {
         setFlipped(true);
     };
 
-    // Conditional rendering to check if the response has returned
+    const handleNext = () => {
+        // Reset the state and get a new question
+        setSelectedOption('');
+        setFlipped(false);
+        setIsCorrect(null);
+        getGeminiResponse('English', 'Kindergarten to Year 2', 'punctuation multiple choice');
+    };
+
+    //Check if the response has returned
     if (!geminiResponse) {
         return <Text>Loading...</Text>; 
     }
@@ -68,7 +76,7 @@ function PunctuationPage() {
 
             {/* Flashcard Section */}
             <GridItem area={'flashcard'} display="flex" justifyContent="center" alignItems="center">
-            <Box
+                <Box
                     bg={flipped ? (isCorrect ? "green.300" : "red.500") : "white"}
                     p="30px"
                     borderRadius="md"
@@ -101,7 +109,10 @@ function PunctuationPage() {
                                         onClick={() => setSelectedOption(option)}
                                         textAlign="left"
                                     >
-                                        <Text color="black">{typeof option === 'object' ? option.text : option}</Text>
+                                        {/* Check if the option is an object or a string */}
+                                        <Text color="black">
+                                            {typeof option === 'object' ? option.text : option}
+                                        </Text>
                                     </Box>
                                 ))}
                             </VStack>
@@ -112,20 +123,28 @@ function PunctuationPage() {
                             </Button>
                         </>
                     ) : (
-                        <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        height="100%"
-                        width="100%"
-                        >
-                            <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
-                                {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
+                        <>
+                            <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
+                                <Text fontSize="2xl" color="black" style={{ transform: "rotateY(180deg)" }}>
+                                    {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                                 </Text>
-                        </Box>
-)}
+                            </Box>
+                        </>
+                    )}
                 </Box>
+
+                {/* Next Button */}
+            {flipped && (
+                <GridItem area={'next-button'} display="flex" justifyContent="center" alignItems="center"  _hover={{ transform: 'scale(1.1)'}}>
+                    <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px"  >
+                        <Text fontSize ="2x1" colour="black">
+                        Next 
+                        </Text>
+                    </Button>
+                </GridItem>
+            )}
             </GridItem>
+
 
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
