@@ -175,7 +175,7 @@ function GrammarPage() {
                     </Box>
                     {/* Science Button */}
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
+                        <Button as={Link} to="/science/details" w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
                             Science
                         </Button>
                     </Box>
