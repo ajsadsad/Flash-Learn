@@ -126,8 +126,7 @@ function MathDetailPage() {
         </VStack>
     </Button>
 </GridItem>
-            
-
+          
             {/* Second Row of Buttons */}
             <GridItem area={'mentalMath'} textAlign="center">
                 <Button 

@@ -1,8 +1,11 @@
 import { Button } from "@chakra-ui/react";
 import { Grid, GridItem } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import useMakeGeminiRequest from '../../hooks/useGeminiApi'
 
 function BottomNav() {
+    const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
+
     return (
         <Grid templateColumns='repeat(3, 1fr)' h="100%" textAlign="center" alignItems="center">
             <GridItem w='100%' h="100%">
