@@ -5,6 +5,7 @@ import HomePage from './components/HomePage/HomePage';
 import EnglishPage from './components/EnglishPage/EnglishPage'
 import MathPage from './components/MathPage/MathPage';
 import SciencePage from './components/SciencePage/SciencePage';
+import ScienceDetailPage from './components/SciencePage/ScienceDetailPage';
 import EnglishDetailPage from './components/EnglishPage/EnglishDetailPage';
 import GrammarPage from './components/EnglishPage/GrammarPage';
 import SpellingPage from './components/EnglishPage/SpellingPage';
@@ -19,6 +20,8 @@ import EquationsPage from './components/MathPage/EquationsPage';
 import AnglesAndShapesPage from './components/MathPage/AnglesAndShapesPage';
 import CombinationEquationsPage from './components/MathPage/CombinationEquationsPage';
 import SubjectPage from './components/SubjectPage/SubjectPage';
+import DesignPage from './components/SciencePage/DesignPage';
+
 
 function App() {
   return (
@@ -79,6 +82,12 @@ function App() {
               }/>
               <Route path={"/science"} element={
                 <SciencePage/>
+              }/>
+              <Route path={"/science/details"} element={
+                <ScienceDetailPage/>
+              }/>
+              <Route path={"/science/design"} element={
+                <DesignPage/>
               }/>
             </Routes>
         </BrowserRouter>
