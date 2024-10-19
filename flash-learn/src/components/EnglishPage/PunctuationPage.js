@@ -3,6 +3,7 @@ import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 function PunctuationPage() {
+
     const [selectedOption, setSelectedOption] = useState('');
     const [flipped, setFlipped] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
@@ -20,7 +21,7 @@ function PunctuationPage() {
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === correctAnswer;
         setIsCorrect(answerIsCorrect);
-        setFlipped(true); 
+        setFlipped(true);
     };
 
     return (
@@ -38,7 +39,7 @@ function PunctuationPage() {
         >
             {/* Header */}
             <GridItem area={'header'} textAlign="center">
-                <Text fontSize="4xl" fontWeight="bold" color="white">Punctuation</Text> 
+                <Text fontSize="4xl" fontWeight="bold" color="white">Punctuation</Text>
             </GridItem>
 
             {/* Flashcard Section */}
@@ -53,7 +54,7 @@ function PunctuationPage() {
                     transform = {flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
                     transition = "transform 0.6s"
                 >
-                    
+
             {!flipped ? (
                 <>{/* Question */}
                             <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
