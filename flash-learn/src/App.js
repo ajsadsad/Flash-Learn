@@ -1,6 +1,7 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {ChakraProvider} from '@chakra-ui/react';
+import LoginPage from './components/LoginPage/LoginPage';
 import HomePage from './components/HomePage/HomePage';
 import EnglishPage from './components/EnglishPage/EnglishPage'
 import MathPage from './components/MathPage/MathPage';
@@ -30,6 +31,9 @@ function App() {
         <BrowserRouter>
             <Routes>
               <Route path={''} element={
+                <LoginPage/>
+              }/>
+              <Route path={'/Homepage'} element={
                 <HomePage/>
               }/>
               <Route path={'/subject'} element={
