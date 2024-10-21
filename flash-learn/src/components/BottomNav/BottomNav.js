@@ -9,17 +9,17 @@ function BottomNav() {
     return (
         <Grid templateColumns='repeat(3, 1fr)' h="100%" textAlign="center" alignItems="center">
             <GridItem w='100%' h="100%">
-                <Button as={Link} to="/english/details" w="100%" h="100%" bg='blue.500' color="white">
+                <Button as={Link} to="/english/details"  w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
                     English
                 </Button>
             </GridItem>
             <GridItem w='100%' h="100%">
-                <Button as={Link} to="/math/details" w="100%" h="100%" bg='red.500' color="white">
+                <Button as={Link} to="/math/details" w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
                     Math
                 </Button>
             </GridItem>
             <GridItem w='100%' h="100%">
-                <Button as={Link} to="/science/details" w="100%" h="100%" bg='blue.500' color="white">
+                <Button as={Link} to="/science/details"  w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
                     Science
                 </Button>
             </GridItem>

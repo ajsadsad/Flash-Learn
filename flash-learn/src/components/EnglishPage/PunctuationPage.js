@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import BottomNav from '../BottomNav/BottomNav';
+import useMakeGeminiRequest from '../../hooks/useGeminiApi';
+
+const subject = "Punctuation";
 
 function PunctuationPage() {
+    const {geminiResponse, getGeminiResponse} = useMakeGeminiRequest;
+    const [dbResponse, setDbResponse] = useState(null);
+    const [questions1, setQuestions] = useState(null);
     const [selectedOption, setSelectedOption] = useState('');
     const [flipped, setFlipped] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(0);
+
+    useEffect(() => {
+        if(dbResponse != null) {
+            console.log(dbResponse.details)
+        }
+    }, [dbResponse]);
+
+    useEffect(() => {
+        const getDbResponse = async () => {
+            try {
+                let response = await fetch('http://localhost:5050/record/topics?subject=' + subject + '&year=3-4');
+                setDbResponse(response.json());
+            } catch (error) {
+                console.error('Error fetching Questions', error);
+            }
+        };
+        getDbResponse();
+    },[]);
 
     // Example questions and options
     const questions = [
@@ -14,7 +38,7 @@ function PunctuationPage() {
             question: "Select the semi colon below",
             options: [
                 ":",
-                ";", 
+                ";",
                 "'"
             ],
             correctAnswer: ";"
@@ -22,8 +46,8 @@ function PunctuationPage() {
         {
             question: "Select the question mark below",
             options: [
-                "?", 
-                "!", 
+                "?",
+                "!",
                 "/"
             ],
             correctAnswer: "?"
@@ -47,7 +71,7 @@ function PunctuationPage() {
         <Grid
             templateAreas={`"header header header"
                             "flashcard flashcard flashcard"
-                            "footer footer footer"`} 
+                            "footer footer footer"`}
             gridTemplateRows={'auto 1fr auto'}
             gridTemplateColumns={'1fr 1fr 1fr'}
             minH="100vh"
@@ -62,7 +86,7 @@ function PunctuationPage() {
             <GridItem area={'header'} textAlign="center">
                 <Text fontSize="5xl" fontWeight="bold" color="#282828" textShadow="1px 1px 6px rgba(0,0,0,0.2)">
                     Punctuation
-                </Text> 
+                </Text>
             </GridItem>
 
             {/* Flashcard Section */}
@@ -72,12 +96,12 @@ function PunctuationPage() {
                     p="30px"
                     borderRadius="md"
                     boxShadow="2xl"
-                    width="80%"  
-                    height="500px" 
+                    width="80%"
+                    height="500px"
                     textAlign="center"
                     transform={flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
                     transition="transform 0.6s, background-color 0.6s"
-                    bgGradient={!flipped && "linear-gradient(111.1deg, rgb(255, 175, 123) -4.8%, rgb(255, 115, 115) 82.7%, rgb(0, 40, 70) 97.2%)"} 
+                    bgGradient={!flipped && "linear-gradient(111.1deg, rgb(255, 175, 123) -4.8%, rgb(255, 115, 115) 82.7%, rgb(0, 40, 70) 97.2%)"}
                 >
                     {!flipped ? (
                         <>
@@ -124,13 +148,13 @@ function PunctuationPage() {
                         </Box>
                     )}
                 </Box>
-            
+
             {/* Next Button */}
             {flipped && (
                 <GridItem area={'next-button'} display="flex" justifyContent="center" alignItems="center">
                     <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px"  >
                         <Text fontSize ="2x1" colour="black">
-                        Next 
+                        Next
                         </Text>
                     </Button>
                 </GridItem>
@@ -139,26 +163,7 @@ function PunctuationPage() {
 
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">
-                <Grid templateColumns="repeat(3, 1fr)" gap={6} textAlign="center">
-                    {/* English Button */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button as={Link} to="/english/details" w="95%" bg="#505050" borderRadius="50px" color="white" _hover={{ bg: "#505050" }}>
-                            English
-                        </Button>
-                    </Box>
-                    {/* Math Button */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button as={Link} to="/math/details" w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
-                            Math
-                        </Button>
-                    </Box>
-                    {/* Science Button */}
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                        <Button w="95%" bg="white" borderRadius="50px" color="black" _hover={{ bg: "#505050" }}>
-                            Science
-                        </Button>
-                    </Box>
-                </Grid>
+                <BottomNav></BottomNav>
             </GridItem>
         </Grid>
     );
