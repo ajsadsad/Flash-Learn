@@ -1,27 +1,73 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { useState } from 'react'
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import { useState, useEffect } from 'react';
 
-export default function useMakeGeminiRequest() {
+const schema = {
+    description : "Multiple choice question",
+    type: SchemaType.ARRAY,
+    items: {
+      type: SchemaType.OBJECT,
+      properties: {
+        question: {
+          type: SchemaType.STRING,
+          description: "question",
+          nullable: false,
+        },
+        options: {
+          type: SchemaType.ARRAY,
+          items: {
+            type: SchemaType.STRING,
+            description: "answers",
+            nullable: false,
+          },
+        },
+        answer: {
+          type: SchemaType.STRING,
+          description: "Correct answer to question",
+          nullable: false,
+        },
+      },
+      required: ["question", "options", "answer"],
+    },
+  };
 
-    const[geminiResponse, setResponse] = useState("default");
+const useMakeGeminiRequest = (topic, year, studentId) => {
 
-    const getGeminiResponse = async (prompt) => {
+    const [geminiResponse, setGeminiResponse] = useState("");
+    const [prompt, setPrompt] = useState(null);
+
+    useEffect(() => {
+      const getGeminiResponse = async() => {
         try {
-            const genAI = new GoogleGenerativeAI(process.env.REACT_APP_API_KEY);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+          await fetch('http://localhost:5050/record/topics?subject=' + topic + '&year=3-4')
+          .then((res) => res.json())
+          .then((res) => {
+            setPrompt("Generate 5 differnt multiple choice question, with four options, aimed at children aged between 9-10 years old, that tests their understanding on " + res.details);
+          })
+        } catch(err) {
+            console.error(err);
+        } finally {
+          if(prompt != null) {
+            const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
+            const model = genAI.getGenerativeModel({
+              model: "gemini-1.5-flash",
+              generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: schema,
+              },
+            });
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
-            setResponse(text);
-        } catch {
-            
-        } finally {
-
+            const testJson = JSON.parse(text);
+            setGeminiResponse(testJson);
+          }
         }
-    }
-    getGeminiResponse();
+      }
+      getGeminiResponse();
+  }, [prompt]);
 
-    return { geminiResponse, getGeminiResponse }
+  return { geminiResponse }
 }
+export default useMakeGeminiRequest;
 // Example prompt
 // const prompt = "Provide a a multiple choice question that requires a student aged from 5 to 7 years old to select from three choices of how to fix the punctuation of a randomly generated short length sentence. Please place this into a JSON format response with the question being a category, and the answers each having its own category. "

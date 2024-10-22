@@ -11,11 +11,21 @@ import { ObjectId } from "mongodb";
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const router = express.Router();
 
+// Get a list of topics based on curent subject
+router.get("/topics", async (req, res) =>{
+  let currSubject = await db.collection('Subjects').findOne({name : req.query.subject});
+  var topic = await db.collection('Topics').findOne({
+    'subject' : new ObjectId(currSubject._id.toString()),
+    'year': "3-4"
+  });
+  res.send(topic);
+})
+
 // This section will help you get a list of all the words.
 router.get("/word", async (req, res) => {
   console.log("Received a request for /word");
   let collection = await db.collection("words");
-  const results = await collection.find({}, { projection: { word: 1 } }).toArray(); 
+  const results = await collection.find({}, { projection: { word: 1 } }).toArray();
   res.json(results); // Send the word bank as JSON
 });
 
