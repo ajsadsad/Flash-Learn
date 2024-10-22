@@ -13,11 +13,6 @@ const router = express.Router();
 
 // Get a list of topics based on curent subject
 router.get("/topics", async (req, res) =>{
-  // var subject = req.query.subject;
-  // let subjects = await db.collection('Subjects');
-  // let query = {name : subject};
-  // let results = await subjects.findOne(query);
-
   let currSubject = await db.collection('Subjects').findOne({name : req.query.subject});
   var topic = await db.collection('Topics').findOne({
     'subject' : new ObjectId(currSubject._id.toString()),
