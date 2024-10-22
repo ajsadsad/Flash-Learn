@@ -1,39 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import useMakeGeminiRequest from '../../hooks/useGeminiApi';
 
 function SpellingPage() {
     const [selectedOption, setSelectedOption] = useState('');
     const [flipped, setFlipped] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
-    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [options, setOptions] = useState([]);
+    const [question, setQuestion] = useState('');
+    const [correctAnswer, setCorrectAnswer] = useState('');
 
-    // Example questions and options
-    const questions = [
-        {
-            question: "Select the correct spelling",
-            options: ["Forty", "Fourty", "Fourety"],
-            correctAnswer: "Forty"
-        },
-        {
-            question: "Select the correct spelling",
-            options: ["Accomodation", "Accommodation", "Acommodation"],
-            correctAnswer: "Accommodation"
+    const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
+
+    // Trigger the Gemini API call on component mount
+    useEffect(() => {
+        getGeminiResponse("Provide a a multiple choice question that requires a student aged from 5 to 7 years old to select from three choices of how to fix the spelling of a randomly generated short length sentence. Please place this into a JSON format response with the question being a category, and the answers as a array and each having its own category with isCorrect value");
+    }, []);
+
+    // Update state based on the API response
+    useEffect(() => {
+        if (geminiResponse) {
+            setQuestion(geminiResponse.question || '');  
+            setOptions(geminiResponse.answers || []);  
+            setCorrectAnswer(geminiResponse.correctAnswer || geminiResponse.isCorrect === true);
+            console.log("Gemini Response:", geminiResponse); // Debugging the response
         }
-    ];
-
+    },[geminiResponse]);  
+    
     const handleSubmit = () => {
-        const answerIsCorrect = selectedOption === questions[currentQuestion].correctAnswer;
+        const answerIsCorrect = selectedOption === correctAnswer;
+
+        // Log to ensure correct comparison
+        console.log("Selected option:", selectedOption);
+        console.log("Correct answer:", correctAnswer);
+
+
         setIsCorrect(answerIsCorrect);
         setFlipped(true);
     };
 
-    const handleNext = () => {
-        setFlipped(false);
+    const handleNext = async () => {
+        // Reset the state and get a new question
         setSelectedOption('');
+        setFlipped(false);
         setIsCorrect(null);
-        setCurrentQuestion((prevQuestion) => (prevQuestion + 1) % questions.length);
+        await getGeminiResponse("Provide a question that requires a student aged from 5 to 7 years old to enter their answer on how to fix the spelling of a randomly generated short length sentence. Please place this into a JSON format response with the question being a category, and the answer each having its own category.");
     };
+
+    //Check if the response has returned
+    if (!geminiResponse) {
+        return <Text>Loading...</Text>;
+    }
+
 
     return (
         <Grid
@@ -45,7 +64,7 @@ function SpellingPage() {
             minH="100vh"
             gap="6"
             padding="20px"
-            bg="#DCDCDC"
+            bg="#DCDCDC"  
             color="blackAlpha.700"
             fontFamily="'Baloo Bhai 2', sans-serif"
             fontWeight="bold"
@@ -54,7 +73,7 @@ function SpellingPage() {
             <GridItem area={'header'} textAlign="center">
                 <Text fontSize="5xl" fontWeight="bold" color="#282828" textShadow="1px 1px 6px rgba(0,0,0,0.2)">
                     Spelling
-                </Text>
+                </Text> 
             </GridItem>
 
             {/* Flashcard Section */}
@@ -64,23 +83,23 @@ function SpellingPage() {
                     p="30px"
                     borderRadius="md"
                     boxShadow="2xl"
-                    width="80%"
-                    height="500px"
+                    width="80%"  
+                    height="500px" 
                     textAlign="center"
                     transform={flipped ? "rotateY(180deg)" : "rotateY(0deg)"}
                     transition="transform 0.6s, background-color 0.6s"
-                    bgGradient={!flipped && "linear-gradient(111.1deg, rgb(255, 175, 123) -4.8%, rgb(255, 115, 115) 82.7%, rgb(0, 40, 70) 97.2%)"}
+                    bgGradient={!flipped && "linear-gradient(111.1deg, rgb(255, 175, 123) -4.8%, rgb(255, 115, 115) 82.7%, rgb(0, 40, 70) 97.2%)"} 
                 >
                     {!flipped ? (
                         <>
                             {/* Question */}
                             <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
-                                {questions[currentQuestion].question}
+                                {question}
                             </Text>
 
                             {/* Options */}
                             <VStack spacing="4" align="stretch">
-                                {questions[currentQuestion].options.map((option, index) => (
+                            {options.map((option, index) => (
                                     <Box
                                         key={index}
                                         p="4"
@@ -90,8 +109,12 @@ function SpellingPage() {
                                         cursor="pointer"
                                         _hover={{ borderColor: "blue.200" }}
                                         onClick={() => setSelectedOption(option)}
+                                        textAlign="left"
                                     >
-                                        <Text color="black">{option}</Text>
+                                        {/* Check if the option is an object or a string */}
+                                        <Text color="black">
+                                            {typeof option === 'object' ? option.text : option}
+                                        </Text>
                                     </Box>
                                 ))}
                             </VStack>
@@ -111,19 +134,25 @@ function SpellingPage() {
                             style={{ transform: "rotateY(180deg)" }}
                         >
                             <Text fontSize="4xl" color="black">
-                                {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${questions[currentQuestion].correctAnswer}`}
+                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                             </Text>
                         </Box>
                     )}
                 </Box>
             
-                {/* Next Button */}
-                {flipped && (
-                    <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px">
-                        Next
+            {/* Next Button */}
+            {flipped && (
+                <GridItem area={'next-button'} display="flex" justifyContent="center" alignItems="center">
+                    <Button onClick={handleNext} size="lg" mt="6" color="blackAlpha.700" marginLeft="40px"  >
+                        <Text fontSize ="2x1" colour="black">
+                        Next 
+                        </Text>
                     </Button>
-                )}
+                </GridItem>
+            )}
             </GridItem>
+
+            
 
             {/* Bottom Navigation */}
             <GridItem area={'footer'} alignSelf="end" justifySelf="stretch">

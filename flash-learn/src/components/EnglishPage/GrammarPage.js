@@ -1,47 +1,58 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { Grid, GridItem, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import useMakeGeminiRequest from '../../hooks/useGeminiApi';
 
 function GrammarPage() {
     const [selectedOption, setSelectedOption] = useState('');
     const [flipped, setFlipped] = useState(false);
-    const [isCorrect, setIsCorrect] = useState(null);
-    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [isCorrect, setIsCorrect] = useState();
+    const [options, setOptions] = useState([]);
+    const [question, setQuestion] = useState('');
+    const [correctAnswer, setCorrectAnswer] = useState('');
 
-    const questions = [
-        {
-            question: "Select the correct use of a comma",
-            options: [
-                "The dog, barked loudly at the cat.",
-                "The dog barked, loudly at the cat.",
-                "The dog barked loudly, at the cat."
-            ],
-            correctAnswer: "The dog barked loudly, at the cat."
-        },
-        {
-            question: "Choose the correct sentence:",
-            options: [
-                "She said 'Hello,' and waved.",
-                "She said, 'Hello' and waved.",
-                "She said, 'Hello,' and waved."
-            ],
-            correctAnswer: "She said, 'Hello,' and waved."
-        },
-        
-    ];
+    const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
 
+    // Trigger the Gemini API call on component mount
+    useEffect(() => {
+        getGeminiResponse("Provide a a multiple choice question that requires a student aged from 5 to 7 years old to select from three choices of how to fix the grammar of a randomly generated short length sentence. Please place this into a JSON format response with the question being a category, and the answers as a array and each having its own category with isCorrect value");
+    }, []);
+
+    // Update state based on the API response
+    useEffect(() => {
+        if (geminiResponse) {
+            setQuestion(geminiResponse.question || '');  
+            setOptions(geminiResponse.answers || []);  
+            setCorrectAnswer(geminiResponse.correctAnswer || geminiResponse.isCorrect === true);
+            console.log("Gemini Response:", geminiResponse); // Debugging the response
+        }
+    }, [geminiResponse]);  
+    
     const handleSubmit = () => {
-        const answerIsCorrect = selectedOption === questions[currentQuestion].correctAnswer;
+        const answerIsCorrect = selectedOption === correctAnswer;
+
+        // Log to ensure correct comparison
+        console.log("Selected option:", selectedOption);
+        console.log("Correct answer:", correctAnswer);
+
+
         setIsCorrect(answerIsCorrect);
-        setFlipped(true); 
+        setFlipped(true);
     };
 
-    const handleNext = () => {
-        setFlipped(false);
+    const handleNext = async () => {
+        // Reset the state and get a new question
         setSelectedOption('');
+        setFlipped(false);
         setIsCorrect(null);
-        setCurrentQuestion((prevQuestion) => (prevQuestion + 1) % questions.length);
+        await getGeminiResponse("Provide a question that requires a student aged from 5 to 7 years old to enter their answer on how to fix the grammar of a randomly generated short length sentence. Please place this into a JSON format response with the question being a category, and the answer each having its own category.");
     };
+
+    //Check if the response has returned
+    if (!geminiResponse) {
+        return <Text>Loading...</Text>;
+    }
+
 
     return (
         <Grid
@@ -83,12 +94,12 @@ function GrammarPage() {
                         <>
                             {/* Question */}
                             <Text fontSize="2xl" mb="4" color="black" fontStyle="italic" textDecoration="underline">
-                                {questions[currentQuestion].question}
+                                {question}
                             </Text>
 
                             {/* Options */}
                             <VStack spacing="4" align="stretch">
-                                {questions[currentQuestion].options.map((option, index) => (
+                            {options.map((option, index) => (
                                     <Box
                                         key={index}
                                         p="4"
@@ -98,8 +109,12 @@ function GrammarPage() {
                                         cursor="pointer"
                                         _hover={{ borderColor: "blue.200" }}
                                         onClick={() => setSelectedOption(option)}
+                                        textAlign="left"
                                     >
-                                        <Text color="black">{option}</Text>
+                                        {/* Check if the option is an object or a string */}
+                                        <Text color="black">
+                                            {typeof option === 'object' ? option.text : option}
+                                        </Text>
                                     </Box>
                                 ))}
                             </VStack>
@@ -119,7 +134,7 @@ function GrammarPage() {
                             style={{ transform: "rotateY(180deg)" }}
                         >
                             <Text fontSize="4xl" color="black">
-                                {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${questions[currentQuestion].correctAnswer}`}
+                            {isCorrect ? "Correct! Well done!" : `Incorrect! The correct answer is: ${correctAnswer}`}
                             </Text>
                         </Box>
                     )}
