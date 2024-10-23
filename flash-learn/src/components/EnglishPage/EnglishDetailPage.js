@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Grid, GridItem, Box, Text, Button, Icon, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaBook, FaPencilAlt, FaGlobe } from 'react-icons/fa'; // Adding icons for fun subjects
-import useMakeGeminiRequest from '../../hooks/useGeminiApi'; //import api
 import BottomNav from '../BottomNav/BottomNav';
 
 function EnglishDetailPage() {
     // Call the Gemini API hook
-    const { geminiResponse, getGeminiResponse } = useMakeGeminiRequest();
     const [wordOfTheDay, setWordOfTheDay] = useState('');
     const [wordBank, setWordBank] = useState([]);
 
@@ -163,8 +161,8 @@ function EnglishDetailPage() {
                 <Box bg="linear-gradient(111.1deg, rgb(0, 40, 70) -4.8%, rgb(255, 115, 115) 82.7%, rgb(255, 175, 123) 97.2%);" p="30px" borderRadius="50px" boxShadow="2xl" _hover={{ transform: 'scale(1.05)', transition: '0.3s' }}>
                     <Text fontSize="2xl" fontWeight="bold" color="white">Definition</Text>
                     <Text fontSize="1xl" color="white">
-                        {geminiResponse || "The teacher inundated the students with homework 2before the holiday break."}
-                        "To overwhelm someone with things or people to deal with."
+                        The teacher inundated the students with homework 2before the holiday break.
+                        To overwhelm someone with things or people to deal with.
                         </Text>
                 </Box>
             </GridItem>
@@ -174,7 +172,7 @@ function EnglishDetailPage() {
                 <Box bg="linear-gradient(111.1deg, rgb(0, 40, 70) -4.8%, rgb(255, 115, 115) 82.7%, rgb(255, 175, 123) 97.2%);" p="30px" borderRadius="50px" boxShadow="2xl" _hover={{ transform: 'scale(1.05)', transition: '0.3s' }}>
                     <Text fontSize="2xl" fontWeight="bold" color="white">Use it in a Sentence</Text>
                     <Text fontSize="1xl" color="white" >
-                        {geminiResponse || "The teacher inundated the students with homework 2before the holiday break."}
+                        The teacher inundated the students with homework 2before the holiday break.
                         {/* "The teacher inundated the students with homework before the holiday break." */}
                     </Text>
                 </Box>

@@ -14,10 +14,10 @@ const router = express.Router();
 // Get a list of topics based on curent subject
 router.get("/topics", async (req, res) =>{
   let currSubject = await db.collection('Subjects').findOne({name : req.query.subject});
-  var topic = await db.collection('Topics').findOne({
+  var topic = await db.collection('Topics').find({
     'subject' : new ObjectId(currSubject._id.toString()),
-    'year': "3-4"
-  });
+    'year': "K-2"
+  }).toArray();
   res.send(topic);
 })
 

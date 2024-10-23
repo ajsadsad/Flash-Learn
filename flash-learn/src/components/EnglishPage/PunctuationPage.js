@@ -14,12 +14,6 @@ function PunctuationPage() {
     const [isCorrect, setIsCorrect] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(0);
 
-    useEffect(() => {
-        if(geminiResponse != null) {
-            console.log(geminiResponse)
-        }
-    }, [geminiResponse]);
-
     const handleSubmit = () => {
         const answerIsCorrect = selectedOption === geminiResponse[currentQuestion].answer;
         setIsCorrect(answerIsCorrect);

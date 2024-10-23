@@ -34,36 +34,49 @@ const useMakeGeminiRequest = (topic, year, studentId) => {
 
     const [geminiResponse, setGeminiResponse] = useState("");
     const [prompt, setPrompt] = useState(null);
+    const test = ""; 
 
     useEffect(() => {
       const getGeminiResponse = async() => {
         try {
-          await fetch('http://localhost:5050/record/topics?subject=' + topic + '&year=3-4')
+          await fetch('http://localhost:5050/record/topics?subject=' + topic + '&year=K-2')
           .then((res) => res.json())
           .then((res) => {
-            setPrompt("Generate 5 differnt multiple choice question, with four options, aimed at children aged between 9-10 years old, that tests their understanding on " + res.details);
+            if(res.length > 1) {
+              let testString = "Generate 5 differnt multiple choice question, with four options, aimed at children aged between 9-10 years old, that tests their understanding on";
+              for(let i in res) {
+                testString.concat(' ', res[i].details);
+              }
+            } else {
+              setPrompt("Generate 5 differnt multiple choice question, with four options, aimed at children aged between 9-10 years old, that tests their understanding on " + res.details);
+            }
           })
         } catch(err) {
             console.error(err);
         } finally {
-          if(prompt != null) {
-            const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
-            const model = genAI.getGenerativeModel({
-              model: "gemini-1.5-flash",
-              generationConfig: {
-                responseMimeType: "application/json",
-                responseSchema: schema,
-              },
-            });
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-            const testJson = JSON.parse(text);
-            setGeminiResponse(testJson);
-          }
         }
       }
       getGeminiResponse();
+  }, []);
+
+  useEffect(() => {
+
+    const getGeminiResponse = async() => {
+      const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
+      const model = genAI.getGenerativeModel({
+        model: "gemini-1.5-flash",
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: schema,
+        },
+      });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      const testJson = JSON.parse(text);
+      setGeminiResponse(testJson);
+    }
+    getGeminiResponse(); 
   }, [prompt]);
 
   return { geminiResponse }
