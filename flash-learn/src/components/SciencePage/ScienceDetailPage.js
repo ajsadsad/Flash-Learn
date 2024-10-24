@@ -1,12 +1,12 @@
 import React from 'react';
 import { Grid, GridItem, Box, Text, Button, Icon, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { FaFlask, FaAtom, FaMicroscope } from 'react-icons/fa'; 
+import { FaFlask, FaAtom, FaMicroscope, FaHouseUser, FaArrowCircleLeft } from 'react-icons/fa'; 
 
 function ScienceDetailPage() {
     return (
         <Grid
-            templateAreas={`"header header header"
+            templateAreas={`"homepage header buttons"
                             "biology chemistry physics"
                             "factOfTheDay factOfTheDay factOfTheDay"
                             "definition definition definition"
@@ -23,6 +23,46 @@ function ScienceDetailPage() {
             fontWeight="bold"
         >
             {/* Header */}
+            <GridItem area={'homepage'} textAlign="center">
+            <Button 
+                    as={Link} 
+                    to="/HomePage"
+                    bgGradient="radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);"
+                    p="20px" 
+                    borderRadius="50px" 
+                    w="50%" 
+                    h="100%" 
+                    border="4px solid #1e90ff"
+                    color="white"
+                    boxShadow="xl"
+                    _hover={{ transform: 'scale(1.1)', boxShadow: '2xl', bg: 'radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);' }} 
+                    transition="0.3s"
+                >
+                    <VStack spacing={1}>
+                        <Icon as={FaHouseUser} w={5} h={5} />
+                        <Text>HomePage</Text>
+                    </VStack>
+                </Button>
+                <Button 
+                    as={Link} 
+                    to="/Subject" 
+                    bgGradient="radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);"
+                    p="20px" 
+                    borderRadius="50px" 
+                    w="50%" 
+                    h="100%" 
+                    border="4px solid #1e90ff"
+                    color="white"
+                    boxShadow="xl"
+                    _hover={{ transform: 'scale(1.1)', boxShadow: '2xl', bg: 'radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);' }} 
+                    transition="0.3s"
+                >
+                    <VStack spacing={1}>
+                        <Icon as={FaArrowCircleLeft} w={5} h={5} />
+                        <Text>Back</Text>
+                    </VStack>
+                </Button>
+            </GridItem>
             <GridItem area={'header'} textAlign="center">
                 <Text 
                     fontSize="5xl" 
