@@ -86,7 +86,7 @@ function PunctuationPage() {
                 >
                     <VStack spacing={1}>
                         <Icon as={FaHouseUser} w={5} h={5} />
-                        <Text>HomePage</Text>
+                        <Text>Home</Text>
                     </VStack>
                 </Button>
                 <Button 
